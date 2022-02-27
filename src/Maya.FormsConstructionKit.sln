@@ -1,0 +1,105 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.31911.260
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maya.FormsConstructionKit.Api", "Maya.FormsConstructionKit.Api\Maya.FormsConstructionKit.Api.csproj", "{A134A8A7-BA1A-4555-A4E7-1CF62D08325A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{362EAB1F-1E41-47BF-BA1E-E7663648A324}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maya.FormsConstructionKit.Spa", "Maya.FormsConstructionKit.Spa\Maya.FormsConstructionKit.Spa.csproj", "{13A84974-C411-4024-A9F8-DCAFF78AC621}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Spa", "Spa", "{92F79616-D634-49EA-912B-9EA08975BAEA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{D9CDDEF3-A200-4DA4-9BEA-B8CE85B1162B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{4F5F3E91-1B56-4DDE-B052-C1741926A59E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maya.FormsConstructionKit.Api.Model", "Infrastructure\Maya.FormsConstructionKit.Api.Model\Maya.FormsConstructionKit.Api.Model.csproj", "{BD03F7C5-1219-471C-B785-CDBEA39FBE6D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{85854DCD-DDBB-400D-95E3-1B84C3E527E0}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		.editorconfig = .editorconfig
+		..\.gitattributes = ..\.gitattributes
+		..\.gitignore = ..\.gitignore
+		global.json = global.json
+		..\LICENSE.md = ..\LICENSE.md
+		nuget.config = nuget.config
+		..\Readme.md = ..\Readme.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maya.FormsConstructionKit.Spa.Model", "Infrastructure\Maya.FormsConstructionKit.Spa.Model\Maya.FormsConstructionKit.Spa.Model.csproj", "{5FCEBE78-5933-4342-993D-C0606FF2E161}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maya.FormsConstructionKit.Spa.UI", "Infrastructure\Maya.FormsConstructionKit.Spa.UI\Maya.FormsConstructionKit.Spa.UI.csproj", "{8645098A-2D98-4897-9809-C5B350B89FBB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maya.FormsConstructionKit.Shared.Model", "Infrastructure\Maya.FormsConstructionKit.Shared.Model\Maya.FormsConstructionKit.Shared.Model.csproj", "{5CC935F4-A0B5-466A-9C9D-E75D3BF99E34}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maya.FormsConstructionKit.Api.Library", "Infrastructure\Maya.FormsConstructionKit.Api.Library\Maya.FormsConstructionKit.Api.Library.csproj", "{512E8762-B03F-473B-93BE-DC0D8E6F10B9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maya.FormsConstructionKit.Api.CQRS", "Infrastructure\Maya.FormsConstructionKit.Api.CQRS\Maya.FormsConstructionKit.Api.CQRS.csproj", "{A21F23A4-055F-4AE9-926E-6BE5B7C386A7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maya.FormsConstructionKit.Spa.Library", "Infrastructure\Maya.FormsConstructionKit.Spa.Library\Maya.FormsConstructionKit.Spa.Library.csproj", "{6B9E0D0B-2077-454E-9600-81ECFE4E6496}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A134A8A7-BA1A-4555-A4E7-1CF62D08325A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A134A8A7-BA1A-4555-A4E7-1CF62D08325A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A134A8A7-BA1A-4555-A4E7-1CF62D08325A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A134A8A7-BA1A-4555-A4E7-1CF62D08325A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13A84974-C411-4024-A9F8-DCAFF78AC621}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13A84974-C411-4024-A9F8-DCAFF78AC621}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13A84974-C411-4024-A9F8-DCAFF78AC621}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13A84974-C411-4024-A9F8-DCAFF78AC621}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD03F7C5-1219-471C-B785-CDBEA39FBE6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD03F7C5-1219-471C-B785-CDBEA39FBE6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD03F7C5-1219-471C-B785-CDBEA39FBE6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD03F7C5-1219-471C-B785-CDBEA39FBE6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FCEBE78-5933-4342-993D-C0606FF2E161}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FCEBE78-5933-4342-993D-C0606FF2E161}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FCEBE78-5933-4342-993D-C0606FF2E161}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FCEBE78-5933-4342-993D-C0606FF2E161}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8645098A-2D98-4897-9809-C5B350B89FBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8645098A-2D98-4897-9809-C5B350B89FBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8645098A-2D98-4897-9809-C5B350B89FBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8645098A-2D98-4897-9809-C5B350B89FBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CC935F4-A0B5-466A-9C9D-E75D3BF99E34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CC935F4-A0B5-466A-9C9D-E75D3BF99E34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CC935F4-A0B5-466A-9C9D-E75D3BF99E34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CC935F4-A0B5-466A-9C9D-E75D3BF99E34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{512E8762-B03F-473B-93BE-DC0D8E6F10B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{512E8762-B03F-473B-93BE-DC0D8E6F10B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{512E8762-B03F-473B-93BE-DC0D8E6F10B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{512E8762-B03F-473B-93BE-DC0D8E6F10B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A21F23A4-055F-4AE9-926E-6BE5B7C386A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A21F23A4-055F-4AE9-926E-6BE5B7C386A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A21F23A4-055F-4AE9-926E-6BE5B7C386A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A21F23A4-055F-4AE9-926E-6BE5B7C386A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B9E0D0B-2077-454E-9600-81ECFE4E6496}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B9E0D0B-2077-454E-9600-81ECFE4E6496}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B9E0D0B-2077-454E-9600-81ECFE4E6496}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B9E0D0B-2077-454E-9600-81ECFE4E6496}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{92F79616-D634-49EA-912B-9EA08975BAEA} = {362EAB1F-1E41-47BF-BA1E-E7663648A324}
+		{D9CDDEF3-A200-4DA4-9BEA-B8CE85B1162B} = {362EAB1F-1E41-47BF-BA1E-E7663648A324}
+		{4F5F3E91-1B56-4DDE-B052-C1741926A59E} = {362EAB1F-1E41-47BF-BA1E-E7663648A324}
+		{BD03F7C5-1219-471C-B785-CDBEA39FBE6D} = {D9CDDEF3-A200-4DA4-9BEA-B8CE85B1162B}
+		{5FCEBE78-5933-4342-993D-C0606FF2E161} = {92F79616-D634-49EA-912B-9EA08975BAEA}
+		{8645098A-2D98-4897-9809-C5B350B89FBB} = {92F79616-D634-49EA-912B-9EA08975BAEA}
+		{5CC935F4-A0B5-466A-9C9D-E75D3BF99E34} = {4F5F3E91-1B56-4DDE-B052-C1741926A59E}
+		{512E8762-B03F-473B-93BE-DC0D8E6F10B9} = {D9CDDEF3-A200-4DA4-9BEA-B8CE85B1162B}
+		{A21F23A4-055F-4AE9-926E-6BE5B7C386A7} = {D9CDDEF3-A200-4DA4-9BEA-B8CE85B1162B}
+		{6B9E0D0B-2077-454E-9600-81ECFE4E6496} = {92F79616-D634-49EA-912B-9EA08975BAEA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {250D9CAD-9869-4213-B530-4DD12C34750A}
+	EndGlobalSection
+EndGlobal

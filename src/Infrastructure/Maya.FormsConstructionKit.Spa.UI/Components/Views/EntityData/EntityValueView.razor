@@ -1,0 +1,8 @@
+﻿@using Microsoft.AspNetCore.Components.Web.Virtualization
+
+<Virtualize Items="ViewModel.EntityData.EntityForm.Components" TItem="Shared.Model.ComponentAll" Context="component">
+        @{
+            var propRow = this.ViewModel.RowManaged.First(x => x.Name == component.Name);
+        }
+        <Maya.FormsConstructionKit.Spa.UI.Components.Core.FormComponent Definition="component" @bind-Data="propRow" @bind-Data:event="DataChanged" />
+</Virtualize>

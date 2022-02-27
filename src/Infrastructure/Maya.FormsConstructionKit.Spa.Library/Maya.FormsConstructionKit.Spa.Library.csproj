@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Authors>Salim Mayaleh</Authors>
+		<Company>Salim Mayaleh</Company>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Havit.Blazor.Components.Web.Bootstrap" Version="2.1.2" />
+		<PackageReference Include="Maya.Ext" Version="2.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Maya.FormsConstructionKit.Shared.Model\Maya.FormsConstructionKit.Shared.Model.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,15 @@
+﻿@page "/entity-form"
+@page "/entity-form/{name}"
+
+<PageTitle>Form - @this.vm?.EntityForm?.Name</PageTitle>
+
+<Maya.FormsConstructionKit.Spa.UI.Components.Core.Container.ContentContainer 
+    IsBusy=this.vm!.IsBusy
+    IsLoading=this.vm!.IsInit
+    NotifyMessage=this.NotifyMessage>
+    <Content>
+        <CascadingValue Name="@(nameof(Library.Contract.UI.ViewModels.EntityForm.IEntityFormViewModel))" Value="@vm">
+            <Maya.FormsConstructionKit.Spa.UI.Components.Views.EntityForm.View />
+        </CascadingValue>
+    </Content>
+</Maya.FormsConstructionKit.Spa.UI.Components.Core.Container.ContentContainer>

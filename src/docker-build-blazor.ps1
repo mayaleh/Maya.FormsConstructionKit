@@ -1,0 +1,2 @@
+#docker build -f "$(pwd)\Blazor-Dockerfile" --force-rm -t maya-formsconstructionkit-blazor:dev --target base "$(pwd)"
+docker build -f "$(pwd)\Blazor-Dockerfile" --no-cache -t formsconstructionkit-blazor:dev .

@@ -1,0 +1,79 @@
+﻿@using Maya.FormsConstructionKit.Shared.Model
+@using Maya.FormsConstructionKit.Shared.Model.Extention
+
+<div class="row mt-3">
+    <div class="col">
+        <HxInputText LabelType="LabelType.Floating" Label="Name" @bind-Value="@componentConfiguration.Name" Hint="Unique name per form / entity. This name is for the property in the entity." />
+    </div>
+    <div class="col">
+        <HxInputText LabelType="LabelType.Floating" Label="Label" @bind-Value="@componentConfiguration.Label" Hint="Label for component." />
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col">
+        <HxSelect Label="Component"
+                  TItem="ComponentKind"
+                  TValue="ComponentKind"
+                  Data="@(Enum.GetValues<ComponentKind>())"
+                  @bind-Value="this.ComponentKindSelected"
+                  TextSelector="@(p => p.ToString())"
+                  ValueSelector="@(p => p)"
+                  Nullable="false"
+                  NullText="-- choose here --"
+                  NullDataText="Loading..."
+                  Hint="Choose component type for this proeprty." />
+    </div>
+    <div class="col">
+        <HxInputText LabelType="LabelType.Floating" Label="Hint" @bind-Value="this.componentConfiguration.Hint" Hint="Hint to be next to the input. Could be description of the field or contains an example." />
+    </div>
+</div>
+
+@*@if ((componentConfiguration.ComponentKind & (ComponentKind.TextArea | ComponentKind.TextBox | ComponentKind.NumericBox)) > 0)*@
+@if (componentConfiguration.ComponentKind is ComponentKind.TextArea or ComponentKind.TextBox or ComponentKind.NumericBox)
+{
+    <h3 class="mt-4">@this.componentConfiguration.ComponentKind.ToString() specific properties</h3>
+}
+
+<div class="row mt-3">
+    @if (componentConfiguration.ComponentKind is ComponentKind.TextArea or ComponentKind.TextBox or ComponentKind.NumericBox)
+    {
+        <HxInputText LabelType="LabelType.Floating" Label="Placeholder" @bind-Value="this.componentBuilderForm.Placeholder" Hint="Text inside the input is displayed, when the input is empty." />
+    }
+
+    @if (this.componentConfiguration.ComponentKind == ComponentKind.NumericBox)
+    {
+        <div class="col">
+            <HxSelect Label="Value type"
+                  TItem="ValueKind"
+                  TValue="ValueKind"
+                  Data="@(this.componentConfiguration.ComponentKind.ValueKinds())"
+                  @bind-Value="componentConfiguration.ValueKind"
+                  TextSelector="@(p => p.ToString())"
+                  ValueSelector="@(p => p)"
+                  Nullable="false"
+                  NullText="-- choose here --"
+                  NullDataText="Loading..."
+                  Hint="Some component could have more value type e.g. NumericBox could have intiger (Int) or Decimal..." />
+        </div>
+
+        @if (componentConfiguration.ValueKind is ValueKind.Float or ValueKind.Decimal)
+        {
+            <div class="col">
+                <HxInputNumber LabelType="LabelType.Floating" Label="Decimals" TValue="int?" @bind-Value="this.componentBuilderForm.Decimals" Hint="The number of decimal digits. On empty value, 2 digits are used as default." />
+                <p>Preview the π number = @PiDigits(this.componentBuilderForm.Decimals)</p>
+            </div>
+        }
+    }
+</div>
+
+
+<div class="row mt-5 justify-content-center">
+    <div class="col-md-6">
+        <HxCard>
+            <HeaderTemplate>Component preview</HeaderTemplate>
+            <BodyTemplate>
+                <Maya.FormsConstructionKit.Spa.UI.Components.Core.FormComponent Definition="componentConfiguration" Data="@(new ComponentValue(){Name="preview", Value=componentConfiguration.ValueKind.DefaultValue() })" />
+            </BodyTemplate>
+        </HxCard>
+    </div>
+</div>

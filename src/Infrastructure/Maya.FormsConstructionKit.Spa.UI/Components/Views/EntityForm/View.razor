@@ -1,0 +1,106 @@
+﻿@using Maya.FormsConstructionKit.Shared.Model;
+@using Maya.FormsConstructionKit.Spa.Library.Helper
+
+<HxBreadcrumb>
+    <HxBreadcrumbItem Href="@Maya.FormsConstructionKit.Spa.UI.PagesName.EntityForms" Text="Forms" />
+    <HxBreadcrumbItem Text="@this.ViewModel.EntityForm.Name" Active="true" />
+</HxBreadcrumb>
+
+<EditForm Model="ViewModel.EntityForm" OnValidSubmit="@ValidSubmitHandler">
+    <DataAnnotationsValidator />
+
+    <div class="row mb-3">
+        <div class="col">
+            <h3>Entity Froms</h3>
+        </div>
+        <div class="col-auto">
+            <HxSubmit Text="Save"
+                      Icon="BootstrapIcon.Save2"
+                      Color="ThemeColor.Primary"
+                      Tooltip="Will create new version of this form."
+                      TooltipWrapperCssClass="ms-auto"
+                      Enabled="this.ViewModel.Commands.SaveCommand.CanExecute" />
+        </div>
+    </div>
+
+    <HxTabPanel>
+        <HxTab Title="Information">
+            <Content>
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <HxInputText Label="Name" @bind-Value="@ViewModel.EntityForm.Name" Placeholder="Form name" Hint="Unique name of the form" />
+                    </div>
+                    <div class="col-6">
+                        <HxSelect Label="Key component"
+                              TItem="ComponentAll"
+                              TValue="string"
+                              Data="@(ViewModel.EntityForm.Components)"
+                              @bind-Value="ViewModel.EntityForm.KeyPropertyName"
+                              TextSelector="@(p => p.Name)"
+                              ValueSelector="@(p => p.Name)"
+                              NullText="-- choose here --"
+                              NullDataText="Loading..."
+                              Hint="Choose component key. This key is used to identify the row value."/>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <h5>Author: TODO</h5>
+                        <h5>Version: <HxBadge Color="ThemeColor.Dark">@ViewModel.EntityForm.VersionDate.ToShortDateString()</HxBadge></h5>
+                        <h5>Is readonly: TODO</h5>
+                        <h5>Is disabled: TODO</h5>
+                    </div>
+                </div>
+            </Content>
+        </HxTab>
+        <HxTab Title="Components">
+            <Content>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <ComponentsView />
+                    </div>
+                </div>
+            </Content>
+        </HxTab>
+        <HxTab Title="Advanced settings">
+            <Content>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h3>Datasource settings</h3>
+                        <h3>webhooks</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 align-self-center">
+                        <HxSelect Label="DataSource type" 
+                            TItem="DataSourceType"
+                            TValue="DataSourceType"
+                            Data="@(Enum.GetValues<DataSourceType>())"
+                            @bind-Value="@ViewModel.EntityForm.DataSource.Type"
+                            TextSelector="@(p => p.ToString())"
+                            ValueSelector="@(p => p)"
+                            Nullable="true"
+                            NullText="-- choose here --"
+                            NullDataText="Loading types..." />
+                    </div>
+                </div>
+
+                @if(ViewModel.EntityForm.DataSource.Type == DataSourceType.Storage)
+                {
+                    <div class="row">
+                    <div class="col-md-6 align-self-center">
+                        <p>No settings are required. Your data for this from will be stored on the server database.</p>
+                    </div>
+                </div>
+                }
+
+                @if(ViewModel.EntityForm.DataSource.Type == DataSourceType.Api)
+                {
+                    // TODO
+                }
+            </Content>
+        </HxTab>
+    </HxTabPanel>
+
+    
+</EditForm>

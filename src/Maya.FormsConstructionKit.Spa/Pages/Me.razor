@@ -1,0 +1,71 @@
+﻿@page "/me"
+@using System.Security.Claims
+
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@attribute [Authorize]
+
+<h3>ClaimsPrincipal Data - test page</h3>
+
+<p>@_authMessage</p>
+
+<p>@_surnameMessage</p>
+
+<ul>
+    <Virtualize Context="claim" ItemsProvider="@LoadClaimsPrincipalData">
+        <ItemContent>
+            <li>@claim.Type: @claim.Value</li>
+        </ItemContent>
+        <Placeholder>
+            <li>
+                Loading&hellip;
+            </li>
+        </Placeholder>
+    </Virtualize>
+</ul>
+
+
+@code {
+    private string _authMessage;
+    private string _surnameMessage;
+    private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
+
+    private async Task GetClaimsPrincipalData()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            _authMessage = $"{user.Identity.Name} is authenticated.";
+            _claims = user.Claims;
+            _surnameMessage =
+                $"Surname: {user.FindFirst(c => c.Type == ClaimTypes.Surname)?.Value}";
+        }
+        else
+        {
+            _authMessage = "The user is NOT authenticated.";
+        }
+    }
+
+
+    private async ValueTask<ItemsProviderResult<Claim>> LoadClaimsPrincipalData(
+    ItemsProviderRequest request)
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            _authMessage = $"{user.Identity.Name} is authenticated.";
+            _claims = user.Claims;
+            _surnameMessage = $"Surname: {user.FindFirst(c => c.Type == ClaimTypes.Surname)?.Value}";
+
+            return new ItemsProviderResult<Claim>(_claims, _claims.Count());
+        }
+
+        _authMessage = "The user is NOT authenticated.";
+        return new ItemsProviderResult<Claim>(default, 0);
+
+    }
+
+}

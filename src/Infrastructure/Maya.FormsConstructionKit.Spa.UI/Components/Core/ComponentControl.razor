@@ -1,0 +1,44 @@
+﻿@using Maya.FormsConstructionKit.Shared.Model
+
+@if (ComponentDefinition.ComponentKind == ComponentKind.TextBox)
+{
+    <HxInputText Label="@ComponentDefinition!.Label" @bind-Value="this.textVal" Hint="@ComponentDefinition!.Hint" Placeholder="@ComponentDefinition!.Placeholder" />
+}
+
+@if (ComponentDefinition.ComponentKind == ComponentKind.TextArea)
+{
+    <HxInputTextArea Label="@ComponentDefinition!.Label" @bind-Value="this.textVal" Hint="@ComponentDefinition!.Hint" Placeholder="@ComponentDefinition!.Placeholder" />
+}
+
+@if (ComponentDefinition.ComponentKind == ComponentKind.NumericBox)
+{
+    if (ComponentDefinition.ValueKind == ValueKind.Int)
+    {
+        <HxInputNumber Label="@ComponentDefinition!.Label" @bind-Value="this.intVal" TValue="int" Hint="@ComponentDefinition!.Hint" />
+    }
+
+    @if (ComponentDefinition.ValueKind == ValueKind.Long)
+    {
+        <HxInputNumber Label="@ComponentDefinition!.Label" @bind-Value="this.longVal" TValue="long" Hint="@ComponentDefinition!.Hint" />
+    }
+
+    @if (ComponentDefinition.ValueKind == ValueKind.Float)
+    {
+        <HxInputNumber Label="@ComponentDefinition!.Label" @bind-Value="this.floatVal" TValue="float" Hint="@ComponentDefinition!.Hint" Decimals="@ComponentDefinition!.Decimals" />
+    }
+
+    @if (ComponentDefinition.ValueKind == ValueKind.Decimal)
+    {
+        <HxInputNumber Label="@ComponentDefinition!.Label" @bind-Value="this.decimalVal" TValue="decimal" Hint="@ComponentDefinition!.Hint" Decimals="@ComponentDefinition!.Decimals" />
+    }
+}
+
+@if (ComponentDefinition.ComponentKind == ComponentKind.CheckBox)
+{
+    <HxInputCheckbox Label="@ComponentDefinition!.Label" @bind-Value="this.boolVal" Hint="@ComponentDefinition!.Hint" />
+}
+
+@if (ComponentDefinition.ComponentKind == ComponentKind.Switch)
+{
+    <HxInputSwitch Label="@ComponentDefinition!.Label" @bind-Value="this.boolVal" Hint="@ComponentDefinition!.Hint" />
+}

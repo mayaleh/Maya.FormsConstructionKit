@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Authors>Salim Mayaleh</Authors>
+		<Company>Salim Mayaleh</Company>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Maya.Ext" Version="2.0.0" />
+		<PackageReference Include="MediatR" Version="10.0.1" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+		<PackageReference Include="MongoDB.Bson" Version="2.14.1" />
+		<PackageReference Include="MongoDB.Driver" Version="2.14.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Maya.FormsConstructionKit.Api.Library\Maya.FormsConstructionKit.Api.Library.csproj" />
+		<ProjectReference Include="..\Maya.FormsConstructionKit.Api.Model\Maya.FormsConstructionKit.Api.Model.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,89 @@
+﻿@using Maya.FormsConstructionKit.Spa.Library.Contract.Services
+
+
+<header class="navbar navbar-expand-md bd-navbar maya-navbar">
+    <nav class="container-fluid flex-wrap flex-md-nowrap" aria-label="Main navigation">
+        <a class="navbar-brand p-0 me-2 text-muted" href="/">
+            <HxIcon Icon="@BootstrapIcon.Table" />
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="bi" fill="currentColor" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
+            </svg>
+        </button>
+
+        <div class="collapse navbar-collapse" id="bdNavbar">
+            <AuthorizeView>
+                <Authorized>
+                    <ul class="navbar-nav flex-row flex-wrap bd-navbar-nav pt-2 py-md-0">
+                        <li class="nav-item col-6 col-md-auto">
+                            <HxNavLink Href="" Match="NavLinkMatch.All"><HxIcon Icon="@BootstrapIcon.ArrowRight" CssClass="active-icon" /><HxIcon Icon="@BootstrapIcon.House" /> Home<HxIcon Icon="@BootstrapIcon.ArrowLeft" CssClass="active-icon" /></HxNavLink>
+                        </li>
+                        <Virtualize Items="@this.entities" TItem="string" Context="entityName">
+                            <li class="nav-item col-6 col-md-auto">
+                                <HxNavLink Href="@("/data/" + entityName)"><HxIcon Icon="@BootstrapIcon.ArrowRight" CssClass="active-icon" />@entityName<HxIcon Icon="@BootstrapIcon.ArrowLeft" CssClass="active-icon" /></HxNavLink>
+                            </li>
+                        </Virtualize>
+                    </ul>
+
+                    <hr class="d-md-none text-white-50">
+
+                    <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+                        <li class="nav-item col-6 col-md-auto">
+                            <HxNavLink Href="/entity-forms"><HxIcon Icon="@BootstrapIcon.ArrowRight" CssClass="active-icon" /><HxIcon Icon="@BootstrapIcon.Gear" /> Forms<HxIcon Icon="@BootstrapIcon.ArrowLeft" CssClass="active-icon" /></HxNavLink>
+                        </li>
+                    </ul>
+
+                </Authorized>
+                <NotAuthorized>
+                    <ul class="navbar-nav flex-row flex-wrap bd-navbar-nav pt-2 py-md-0">
+                        <li class="nav-item col-6 col-md-auto">
+                            <a href="https://www.mayaleh.cz/#contact-1" class="me-4 text-reset" target="_blank" rel="noopener" title="Contect me">
+                                <HxIcon Icon="@BootstrapIcon.Send" CssClass="fs-4" />
+                            </a>
+                        </li>
+                        <li class="nav-item col-6 col-md-auto">
+                            <a href="https://twitter.com/SalimMayaleh" class="me-4 text-reset" target="_blank" rel="noopener">
+                                <HxIcon Icon="@BootstrapIcon.Twitter" CssClass="fs-4" />
+                            </a>
+                        </li>
+                        <li class="nav-item col-6 col-md-auto">
+                            <a href="https://www.linkedin.com/in/salim-mayaleh-5076a6150/" class="me-4 text-reset" target="_blank" rel="noopener">
+                                <HxIcon Icon="@BootstrapIcon.Linkedin" CssClass="fs-4" />
+                            </a>
+                        </li>
+                    </ul>
+
+                    <hr class="d-md-none text-white-50">
+                    
+                    <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+                        <li class="nav-item col-6 col-md-auto">
+                            <a href="https://github.com/mayaleh/Maya.FormsConstructionKit" target="_blank" rel="noopener">
+                                <HxIcon Icon="@BootstrapIcon.Github" CssClass="fs-4" />
+                            </a>
+                        </li>
+                    </ul>
+                </NotAuthorized>
+            </AuthorizeView>
+            <LoginDisplay />
+        </div>
+    </nav>
+</header>
+
+
+@code {
+    [Inject]
+    public IApiService ApiService { get; set; } = null!;
+
+    ICollection<string> entities = new List<string>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var availableEntitiesResult = await ApiService.EntityForm.GetAvailableAsync();
+        if (availableEntitiesResult.IsSuccess)
+        {
+            this.entities = availableEntitiesResult.Success;
+        }
+    }
+}

@@ -1,0 +1,40 @@
+﻿
+<div class="row mb-3">
+    <div class="col">
+        <HxButton Text="Add component"
+            Icon="BootstrapIcon.Plus"
+            Size="ButtonSize.Regular"
+            Color="ThemeColor.Primary"
+            Enabled="@this.ViewModel!.Commands.ShowAddComponentCommand.CanExecute"
+            OnClick="@this.HandleAddComponent" />
+    </div>
+</div>
+
+<HxGrid @ref="componentsGird" TItem="Maya.FormsConstructionKit.Shared.Model.ComponentAll" TableContainerCssClass="table-responsive" DataProvider="ProcessingDataProvider" PageSize="10">
+    <Columns>
+        <HxGridColumn TItem="Maya.FormsConstructionKit.Shared.Model.ComponentAll" HeaderText="Name" ItemTextSelector="@(item => item.Name)" SortKeySelector="@(item => item.Name)" IsDefaultSortColumn="true" />
+        <HxGridColumn TItem="Maya.FormsConstructionKit.Shared.Model.ComponentAll" HeaderText="Kind" ItemTextSelector="@(item => item.ComponentKind.ToString())" SortKeySelector="@(item => item.ComponentKind.ToString())" />
+        <HxGridColumn TItem="Maya.FormsConstructionKit.Shared.Model.ComponentAll" HeaderText="Value type" ItemTextSelector="@(item => item.ValueKind.ToString())" SortKeySelector="@(item => item.ValueKind.ToString())" />
+        <HxGridColumn TItem="Maya.FormsConstructionKit.Shared.Model.ComponentAll" HeaderText="Label" ItemTextSelector="@(item => item.Label)" SortKeySelector="@(item => item.Label)" />
+        <HxGridColumn TItem="Maya.FormsConstructionKit.Shared.Model.ComponentAll" HeaderText="Hint" ItemTextSelector="@(item => item.Hint)" SortKeySelector="@(item => item.Hint)" />
+    </Columns>
+
+    <ContextMenu Context="item">
+        <HxContextMenu>
+            <HxContextMenuItem Text="Edit" Icon="BootstrapIcon.Pen" OnClick="() => HandleEditComponent(item)" />
+            <HxContextMenuItem Text="Delete" Icon="BootstrapIcon.Trash" OnClick="() => { }" />
+        </HxContextMenu>
+    </ContextMenu>
+</HxGrid>
+
+
+@*Edit from for component*@
+<HxModal @ref="componentEditingForm" Title="Component" Centered="true" ShowCloseButton="false" Size="ModalSize.Large">
+    <BodyTemplate>
+        <ComponentView />
+    </BodyTemplate>
+    <FooterTemplate>
+        <HxButton Text="Confirm" Tooltip="It does not persistently save the changes. To save the changes permanently, please save all the form." Color="ThemeColor.Primary" OnClick="@this.HandleCompleteEditingComponent" />
+        <HxButton Text="Cancel" Color="ThemeColor.Secondary" OnClick="@this.HandleCancelEditingComponent" />
+    </FooterTemplate>
+</HxModal>

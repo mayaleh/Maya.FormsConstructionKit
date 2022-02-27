@@ -1,0 +1,14 @@
+﻿@page "/data/{entityName}"
+
+<PageTitle>@EntityName data</PageTitle>
+
+<Maya.FormsConstructionKit.Spa.UI.Components.Core.Container.ContentContainer 
+    IsBusy=this.vm!.IsBusy
+    IsLoading=this.vm!.IsInit
+    NotifyMessage=this.NotifyMessage>
+    <Content>
+        <CascadingValue Name="@(nameof(Library.Contract.UI.ViewModels.EntityData.IEntityDataViewModel))" Value="@vm">
+            <Maya.FormsConstructionKit.Spa.UI.Components.Views.EntityData.View />
+        </CascadingValue>
+    </Content>
+</Maya.FormsConstructionKit.Spa.UI.Components.Core.Container.ContentContainer>

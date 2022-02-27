@@ -1,0 +1,33 @@
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
+COPY ["nuget.config", "."]
+COPY ["Maya.FormsConstructionKit.Spa/Maya.FormsConstructionKit.Spa.csproj", "Maya.FormsConstructionKit.Spa/"]
+COPY ["Infrastructure/Maya.FormsConstructionKit.Shared.Model/Maya.FormsConstructionKit.Shared.Model.csproj", "Infrastructure/Maya.FormsConstructionKit.Shared.Model/"]
+COPY ["Infrastructure/Maya.FormsConstructionKit.Spa.UI/Maya.FormsConstructionKit.Spa.UI.csproj", "Infrastructure/Maya.FormsConstructionKit.Spa.UI/"]
+COPY ["Infrastructure/Maya.FormsConstructionKit.Spa.Library/Maya.FormsConstructionKit.Spa.Library.csproj", "Infrastructure/Maya.FormsConstructionKit.Spa.Library/"]
+COPY ["Infrastructure/Maya.FormsConstructionKit.Spa.Model/Maya.FormsConstructionKit.Spa.Model.csproj", "Infrastructure/Maya.FormsConstructionKit.Spa.Model/"]
+RUN dotnet restore "Maya.FormsConstructionKit.Spa/Maya.FormsConstructionKit.Spa.csproj"
+COPY . .
+WORKDIR "/src/Maya.FormsConstructionKit.Spa"
+RUN dotnet build "Maya.FormsConstructionKit.Spa.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "Maya.FormsConstructionKit.Spa.csproj" -c Release -o /app/publish
+
+FROM nginx:alpine AS final
+WORKDIR /var/www/web
+COPY --from=publish /app/publish/wwwroot .
+COPY ["Maya.FormsConstructionKit.Spa/nginx/nginx.conf", "/etc/nginx/nginx.conf"]
+# openssl req -x509 -newkey rsa:2048 -keyout /etc/nginx/certificates/key.pem -out /etc/nginx/certificates/cert.pem -days 36500 -nodes -subj /CN=localhost
+
+# openssl req -x509 -nodes -days 36500 -subj "/C=CA/ST=QC/O=Mayaleh, Inc./CN=localhost" -addext "subjectAltName=DNS:localhost" -newkey rsa:2048 -keyout ./nginx-private-self.key -out ./nginx-selfsigned.crt;
+COPY ["Maya.FormsConstructionKit.Spa/nginx/key.pem", "/etc/nginx/certificates/key.pem"]
+COPY ["Maya.FormsConstructionKit.Spa/nginx/cert.pem", "/etc/nginx/certificates/cert.pem"]
+COPY ["Maya.FormsConstructionKit.Spa/nginx/nginx-selfsigned.crt", "/etc/nginx/certificates/nginx-selfsigned.crt"]
+COPY ["Maya.FormsConstructionKit.Spa/nginx/nginx-private-self.key", "/etc/nginx/certificates/nginx-private-self.key"]

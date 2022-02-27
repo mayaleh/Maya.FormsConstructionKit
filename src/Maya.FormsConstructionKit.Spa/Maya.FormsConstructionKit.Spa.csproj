@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>54b58bd6-f567-4843-bfc7-f5e75eba08eb</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<Authors>Salim Mayaleh</Authors>
+		<Company>Salim Mayaleh</Company>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Havit.Blazor.Components.Web.Bootstrap" Version="2.1.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="6.0.1" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+		<PackageReference Include="System.Reactive" Version="5.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Infrastructure\Maya.FormsConstructionKit.Shared.Model\Maya.FormsConstructionKit.Shared.Model.csproj" />
+		<ProjectReference Include="..\Infrastructure\Maya.FormsConstructionKit.Spa.Library\Maya.FormsConstructionKit.Spa.Library.csproj" />
+		<ProjectReference Include="..\Infrastructure\Maya.FormsConstructionKit.Spa.Model\Maya.FormsConstructionKit.Spa.Model.csproj" />
+		<ProjectReference Include="..\Infrastructure\Maya.FormsConstructionKit.Spa.UI\Maya.FormsConstructionKit.Spa.UI.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="wwwroot\js\saveFile.js">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+</Project>

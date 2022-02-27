@@ -1,0 +1,57 @@
+﻿@using Maya.FormsConstructionKit.Shared.Model;
+
+@if (component.ComponentKind == ComponentKind.TextBox)
+{
+    this.isComponentSupported = true;
+    <HxInputText Label="@component!.Label" @bind-Value="@valueStr" Placeholder="@component!.Placeholder" Hint="@component!.Hint" />
+}
+
+@if (component.ComponentKind == ComponentKind.TextArea)
+{
+    this.isComponentSupported = true;
+    <HxInputTextArea Label="@component!.Label" Hint="@component!.Hint" Placeholder="@component!.Placeholder" @bind-Value="@valueStr" />
+}
+
+@if (component.ComponentKind == ComponentKind.NumericBox)
+{
+    if (component.ValueKind == ValueKind.Int)
+    {
+        this.isComponentSupported = true;
+        <HxInputNumber Label="@component!.Label" Hint="@component!.Hint" @bind-Value="@valueInt" />
+    }
+
+    if (component.ValueKind == ValueKind.Long)
+    {
+        this.isComponentSupported = true;
+        <HxInputNumber Label="@component!.Label" Hint="@component!.Hint" TValue="long" @bind-Value="@valueLong" />
+    }
+
+    if (component.ValueKind == ValueKind.Float)
+    {
+        this.isComponentSupported = true;
+        <HxInputNumber Label="@component!.Label" Hint="@component!.Hint" Decimals="@component!.Decimals" TValue="float" @bind-Value="@valueFloat" />
+    }
+
+    if (component.ValueKind == ValueKind.Decimal)
+    {
+        this.isComponentSupported = true;
+        <HxInputNumber Label="@component!.Label" Hint="@component!.Hint" Decimals="@component!.Decimals" TValue="decimal" @bind-Value="@valueDecimal" />
+    }
+}
+
+@if (component.ComponentKind == ComponentKind.CheckBox)
+{
+    this.isComponentSupported = true;
+    <HxInputCheckbox Label="@component!.Label" @bind-Value="@valueBool" />
+}
+
+@if (component.ComponentKind == ComponentKind.Switch)
+{
+    this.isComponentSupported = true;
+    <HxInputSwitch Label="@component!.Label" @bind-Value="@valueBool" />
+}
+
+@if (this.isComponentSupported == false)
+{
+    <HxAlert Color="ThemeColor.Danger">Component type @component.ComponentKind.ToString() could not match any component. Label: @component.Label; Name: @component.Name</HxAlert>
+}

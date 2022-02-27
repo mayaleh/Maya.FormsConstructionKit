@@ -1,0 +1,11 @@
+﻿@using Havit.Blazor.Components.Web.Bootstrap
+@if(IsLoading)
+{
+	<HxSpinner Color="ThemeColor.Info" />
+}
+else
+{
+	<HxProgressIndicator InProgress="@IsBusy" Delay="0">
+		@Content
+	</HxProgressIndicator>
+}

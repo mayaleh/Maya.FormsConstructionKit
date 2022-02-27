@@ -1,0 +1,133 @@
+﻿@using Maya.FormsConstructionKit.Shared.Model
+@using Maya.FormsConstructionKit.Shared.Model.Extention
+
+<div class="row mt-3">
+    <div class="col">
+        <HxInputText Label="Name" @bind-Value="@ViewModel.ComponentEdit.Name" Hint="Unique name per form / entity. This name is for the property in the entity." />
+    </div>
+    <div class="col">
+        <HxInputText Label="Label" @bind-Value="@ViewModel.ComponentEdit.Label" Hint="Label for component." />
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col">
+        <HxSelect Label="Component"
+                  TItem="ComponentKind"
+                  TValue="ComponentKind"
+                  Data="@(Enum.GetValues<ComponentKind>())"
+                  @bind-Value="this.ComponentKindSelected"
+                  TextSelector="@(p => p.ToString())"
+                  ValueSelector="@(p => p)"
+                  Nullable="false"
+                  NullText="-- choose here --"
+                  NullDataText="Loading..."
+                  Hint="Choose component type for this proeprty." />
+    </div>
+    <div class="col">
+        <HxInputText Label="Hint" @bind-Value="ViewModel.ComponentEdit.Hint" Hint="Hint to be next to the input. Could be description of the field or contains an example." />
+    </div>
+</div>
+
+@*@if ((componentConfiguration.ComponentKind & (ComponentKind.TextArea | ComponentKind.TextBox | ComponentKind.NumericBox)) > 0)*@
+@if (ViewModel.ComponentEdit.ComponentKind is ComponentKind.TextArea or ComponentKind.TextBox or ComponentKind.NumericBox)
+{
+    <h5 class="mt-4">@ViewModel.ComponentEdit.ComponentKind.ToString() specific properties</h5>
+}
+
+<div class="row mt-3">
+    @if (ViewModel.ComponentEdit.ComponentKind is ComponentKind.TextArea or ComponentKind.TextBox or ComponentKind.NumericBox)
+    {
+        <HxInputText Label="Placeholder" @bind-Value="this.componentBuilderForm.Placeholder" Hint="Text inside the input is displayed, when the input is empty." />
+    }
+
+    @if (ViewModel.ComponentEdit.ComponentKind == ComponentKind.TextBox && @ViewModel.EntityForm.DataSource.Type == DataSourceType.Storage)
+    {
+        <HxInputSwitch Label="Is unique" @bind-Value="@ViewModel.ComponentEdit.IsUnique" Hint="On create or update, it will check, if the value already exists. The speed performance is the cost..." />
+    }
+
+    @if (ViewModel.ComponentEdit.ComponentKind == ComponentKind.NumericBox)
+    {
+        <div class="col">
+            <HxSelect Label="Value type"
+                  TItem="ValueKind"
+                  TValue="ValueKind"
+                  Data="@(ViewModel.ComponentEdit.ComponentKind.ValueKinds())"
+                  @bind-Value="ViewModel.ComponentEdit.ValueKind"
+                  TextSelector="@(p => p.ToString())"
+                  ValueSelector="@(p => p)"
+                  Nullable="false"
+                  NullText="-- choose here --"
+                  NullDataText="Loading..."
+                  Hint="Some component could have more value type e.g. NumericBox could have intiger (Int) or Decimal..." />
+        </div>
+
+        @if (ViewModel.ComponentEdit.ValueKind is ValueKind.Float or ValueKind.Decimal)
+        {
+            <div class="col">
+                <HxInputNumber Label="Decimals" TValue="int?" @bind-Value="this.componentBuilderForm.Decimals" Hint="The number of decimal digits. On empty value, 2 digits are used as default." />
+                <p>Preview the π number = @PiDigits(this.componentBuilderForm.Decimals)</p>
+            </div>
+        }
+    }
+</div>
+
+@* show the component preview *@
+<div class="row mt-5 justify-content-center">
+    <div class="col">
+        <HxCard>
+            <HeaderTemplate>Component preview</HeaderTemplate>
+            <BodyTemplate>
+                @if (ViewModel.ComponentEdit.ComponentKind == ComponentKind.TextBox)
+                {
+                    var bindedValue = string.Empty;
+                    <HxInputText Label="@ViewModel.ComponentEdit!.Label" @bind-Value="bindedValue" Hint="@ViewModel.ComponentEdit!.Hint" Placeholder="@componentBuilderForm!.Placeholder" />
+                }
+
+                @if (ViewModel.ComponentEdit.ComponentKind == ComponentKind.TextArea)
+                {
+                    var bindedValue = string.Empty;
+                    <HxInputTextArea Label="@ViewModel.ComponentEdit!.Label" @bind-Value="bindedValue" Hint="@ViewModel.ComponentEdit!.Hint" Placeholder="@componentBuilderForm!.Placeholder" />
+                }
+
+                @if (ViewModel.ComponentEdit.ComponentKind == ComponentKind.NumericBox)
+                {
+                    if (ViewModel.ComponentEdit.ValueKind == ValueKind.Int)
+                    {
+                        var bindedValue = default(int);
+                        <HxInputNumber Label="@ViewModel.ComponentEdit!.Label" @bind-Value="bindedValue" TValue="int" Hint="@ViewModel.ComponentEdit!.Hint" />
+                    }
+
+                    @if (ViewModel.ComponentEdit.ValueKind == ValueKind.Long)
+                    {
+                        var bindedValue = default(long);
+                        <HxInputNumber Label="@ViewModel.ComponentEdit!.Label" @bind-Value="bindedValue" TValue="long" Hint="@ViewModel.ComponentEdit!.Hint" />
+                    }
+
+                    @if (ViewModel.ComponentEdit.ValueKind == ValueKind.Float)
+                    {
+                        var bindedValue = default(float);
+                        <HxInputNumber Label="@ViewModel.ComponentEdit!.Label" @bind-Value="bindedValue" TValue="float" Hint="@ViewModel.ComponentEdit!.Hint" Decimals="@componentBuilderForm!.Decimals" />
+                    }
+
+                    @if (ViewModel.ComponentEdit.ValueKind == ValueKind.Decimal)
+                    {
+                        var bindedValue = default(decimal);
+                        <HxInputNumber Label="@ViewModel.ComponentEdit!.Label" @bind-Value="bindedValue" TValue="decimal" Hint="@ViewModel.ComponentEdit!.Hint" Decimals="@componentBuilderForm!.Decimals" />
+                    }
+                }
+
+                @if (ViewModel.ComponentEdit.ComponentKind == ComponentKind.CheckBox)
+                {
+                    var bindedValue = default(bool);
+                    <HxInputCheckbox Label="@ViewModel.ComponentEdit!.Label" @bind-Value="bindedValue" Hint="@ViewModel.ComponentEdit!.Hint" />
+                }
+
+                @if (ViewModel.ComponentEdit.ComponentKind == ComponentKind.Switch)
+                {
+                    var bindedValue = default(bool);
+                    <HxInputSwitch Label="@ViewModel.ComponentEdit!.Label" @bind-Value="bindedValue" Hint="@ViewModel.ComponentEdit!.Hint" />
+                }
+            </BodyTemplate>
+        </HxCard>
+    </div>
+</div>

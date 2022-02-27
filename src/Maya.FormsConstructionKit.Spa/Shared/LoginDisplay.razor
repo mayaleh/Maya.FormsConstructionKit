@@ -1,0 +1,56 @@
+﻿@using Maya.FormsConstructionKit.Spa.Library.Contract.Settings
+@using Maya.FormsConstructionKit.Spa.Model.Settings
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+@inject NavigationManager Navigation
+@inject SignOutSessionStateManager SignOutManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IAppSettings AppSettings
+
+<AuthorizeView>
+    <Authorized>
+        <NavLink Href="/me">
+            @if (string.IsNullOrEmpty(this.pictureSrc) == false)
+            {
+                <img src="@pictureSrc" alt="Profile" class="rounded-circle img-fluid profile-picture mb-3 mb-md-0" style="width: 36px; display: inline-block; margin-right: 8px; " />
+            }
+            <span>@context.User.Identity?.Name</span>
+        </NavLink>
+        <button class="btn btn-inline-primary my-2 my-md-0 ms-md-3" @onclick="BeginSignOut">Log out</button>
+    </Authorized>
+    <NotAuthorized>
+        <a class="btn btn-inline-primary d-lg-inline-block my-2 my-md-0 ms-md-3" href="authentication/login"><i class="fa-solid fa-right-to-bracket"></i> Log in</a>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private string? pictureSrc = null;
+    private async Task BeginSignOut(MouseEventArgs args)
+    {
+        await SignOutManager.SetSignOutState();
+        //Navigation.NavigateTo("authentication/logout");
+        Navigation.NavigateTo($"{AppSettings.OAuthentication.Authority}v2/logout?client_id={AppSettings.OAuthentication.ClientId}&returnTo={this.Navigation.BaseUri}authentication/logout");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await this.GetClaimsPrincipalData();
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    private async Task GetClaimsPrincipalData()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity != null && user.Identity.IsAuthenticated)
+        {
+            var picClaim = user.Claims.FirstOrDefault(x => x.Type.Equals("picture", StringComparison.OrdinalIgnoreCase));
+            if (picClaim != null)
+            {
+                this.pictureSrc = picClaim.Value;
+            }
+        }
+    }
+}

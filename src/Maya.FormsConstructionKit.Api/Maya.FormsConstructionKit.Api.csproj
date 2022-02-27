@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Authors>Salim Mayaleh</Authors>
+		<Company>Salim Mayaleh</Company>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+		<PackageReference Include="MongoDB.Bson" Version="2.14.1" />
+		<PackageReference Include="MongoDB.Driver" Version="2.14.1" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Infrastructure\Maya.FormsConstructionKit.Api.CQRS\Maya.FormsConstructionKit.Api.CQRS.csproj" />
+		<ProjectReference Include="..\Infrastructure\Maya.FormsConstructionKit.Api.Library\Maya.FormsConstructionKit.Api.Library.csproj" />
+		<ProjectReference Include="..\Infrastructure\Maya.FormsConstructionKit.Api.Model\Maya.FormsConstructionKit.Api.Model.csproj" />
+		<ProjectReference Include="..\Infrastructure\Maya.FormsConstructionKit.Shared.Model\Maya.FormsConstructionKit.Shared.Model.csproj" />
+	</ItemGroup>
+
+</Project>

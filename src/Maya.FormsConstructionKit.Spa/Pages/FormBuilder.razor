@@ -1,0 +1,28 @@
+﻿@page "/form-builder"
+
+<PageTitle>Form builder</PageTitle>
+
+<h2>Form builder</h2>
+
+<div class="row">
+    <div class="col-auto">
+        <HxNavLink Href="/form/mockid/component-builder">Add component</HxNavLink>
+    </div>
+</div>
+
+<HxGrid TItem="Component" TableContainerCssClass="table-responsive" DataProvider="ClientSideProcessingDataProvider" PageSize="10">
+    <Columns>
+        <HxGridColumn TItem="Component" HeaderText="Name" ItemTextSelector="@(item => item.Name)" SortKeySelector="@(item => item.Name)" IsDefaultSortColumn="true" />
+        <HxGridColumn TItem="Component" HeaderText="Type" ItemTextSelector="@(item => item.ComponentKind.ToString())" SortKeySelector="@(item => item.ComponentKind.ToString())" />
+        <HxGridColumn TItem="Component" HeaderText="Label" ItemTextSelector="@(item => item.Label)" SortKeySelector="@(item => item.Label)" />
+        <HxGridColumn TItem="Component" HeaderText="Value type" ItemTextSelector="@(item => item.ValueKind.ToString())" SortKeySelector="@(item => item.ValueKind.ToString())" />
+        <HxGridColumn TItem="Component" HeaderText="Hint" ItemTextSelector="@(item => item.Hint)" SortKeySelector="@(item => item.Hint)" />
+    </Columns>
+    <ContextMenu Context="item">
+        <HxContextMenu>
+            <HxContextMenuItem Text="Delete" Icon="BootstrapIcon.Trash" OnClick="() => RemoveComponent(item)" />
+            <HxContextMenuItem Text="Edit" Icon="BootstrapIcon.Pencil" OnClick="() => EditComponent(item)" />
+            <HxContextMenuItem Text="Preview" Icon="BootstrapIcon.Eye" OnClick="() => PreviewComponent(item)" />
+        </HxContextMenu>
+    </ContextMenu>
+</HxGrid>

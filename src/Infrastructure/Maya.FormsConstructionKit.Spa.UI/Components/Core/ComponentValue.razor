@@ -1,0 +1,44 @@
+﻿@using Maya.FormsConstructionKit.Shared.Model
+
+@if (component.ComponentKind == ComponentKind.TextBox)
+{
+    <p>@(component!.Label): @((string)Data.Value)</p>   
+}
+
+@if (component.ComponentKind == ComponentKind.TextArea)
+{
+    <p>@(component!.Label): @((string)Data.Value)</p>
+}
+
+@if (component.ComponentKind == ComponentKind.NumericBox)
+{
+    if (component.ValueKind == ValueKind.Int)
+    {
+        <p>@(component!.Label): @((int)Data.Value)</p>
+    }
+
+    if (component.ValueKind == ValueKind.Long)
+    {
+        <p>@(component!.Label): @((long)Data.Value)</p>
+    }
+
+    if (component.ValueKind == ValueKind.Float)
+    {
+        <p>@(component!.Label): @((float)Data.Value)</p>
+    }
+
+    if (component.ValueKind == ValueKind.Decimal)
+    {
+        <p>@(component!.Label): @((decimal)Data.Value)</p>
+    }
+}
+
+@if (component.ComponentKind == ComponentKind.CheckBox)
+{
+    <p>@(component!.Label): @((bool)Data.Value)</p>   
+}
+
+@if (component.ComponentKind == ComponentKind.Switch)
+{
+    <p>@(component!.Label): @((bool)Data.Value)</p>   
+}

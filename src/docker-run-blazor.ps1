@@ -1,0 +1,1 @@
+docker run -p 5112:80 -p 7112:443 formsconstructionkit-blazor:dev

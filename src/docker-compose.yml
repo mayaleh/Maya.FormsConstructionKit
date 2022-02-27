@@ -1,0 +1,36 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  frontend-blazor:
+    build: 
+      dockerfile: Blazor-Dockerfile
+      context: .
+    ports:
+      - "5112:80"
+      - "7112:443"
+
+  backend-api:
+    build:
+      dockerfile: Api-Dockerfile
+      context: .
+    ports:
+      - "5262:80"
+      - "7262:443"
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/

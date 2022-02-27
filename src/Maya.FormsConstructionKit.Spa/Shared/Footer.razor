@@ -1,0 +1,72 @@
+﻿@using Maya.Ext.Func.Rop
+@using Maya.FormsConstructionKit.Spa.Library.Contract.Services
+<footer class="text-center text-lg-start bg-light text-muted maya-footer">
+    <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+        <div class="me-5 d-none d-lg-block">
+            <span>Get connected with us on social networks:</span>
+        </div>
+
+        <div>
+            <a href="https://twitter.com/SalimMayaleh" target="_blank" rel="noopener" class="me-4 text-reset">
+                <HxIcon Icon="@BootstrapIcon.Twitter" />
+            </a>
+            <a href="https://www.linkedin.com/in/salim-mayaleh-5076a6150/" target="_blank" rel="noopener" class="me-4 text-reset">
+                <HxIcon Icon="@BootstrapIcon.Linkedin" />
+            </a>
+            <a href="https://github.com/mayaleh/Maya.FormsConstructionKit" target="_blank" rel="noopener" class="me-4 text-reset">
+                <HxIcon Icon="@BootstrapIcon.Github" />
+            </a>
+        </div>
+        <!-- Right -->
+    </section>
+
+    <section class="">
+        <div class="container text-center text-md-start mt-5">
+
+            <div class="row mt-3">
+
+                <div class="col-md-5 col-lg-4 col-xl-4 mx-auto mb-md-0 mb-4">
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        API info
+                    </h6>
+                    <p>Auhtor: @this.appInfo?.Author</p>
+                    @*<p>Message: @this.appInfo?.Content</p>*@
+                    <p>@this.appInfo?.Name</p>
+                </div>
+
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        Contact
+                    </h6>
+                    <p><HxIcon Icon="@BootstrapIcon.PersonCircle" CssClass="me-3" />Salim Mayaleh</p>
+                    <p>
+                        <a href="mailto:info@mayaleh.cz" class="text-reset"><HxIcon Icon="@BootstrapIcon.Envelope" CssClass="me-3" />info@mayaleh.cz</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+        © @DateTime.Now.ToString("yyyy") Copyright:
+        <a class="text-reset fw-bold" href="https://mayaleh.cz/">mayaleh.cz</a>
+    </div>
+</footer>
+
+
+@code{
+    [Inject]
+    public IApiService ApiService { get; set; } = null!;
+    
+    Maya.FormsConstructionKit.Shared.Model.AppInfo? appInfo;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ApiService.GetApiInfoAsync()
+                .MatchSuccessAsync(x =>
+                {
+                    this.appInfo = x;
+                    return Task.FromResult(Ext.Unit.Default);
+                });
+    }
+}
