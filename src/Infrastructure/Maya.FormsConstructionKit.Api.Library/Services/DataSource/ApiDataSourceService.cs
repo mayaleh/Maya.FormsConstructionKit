@@ -6,6 +6,14 @@ namespace Maya.FormsConstructionKit.Api.Library.Services.DataSource
 {
     public class ApiDataSourceService : IDataSourceService
     {
+        private readonly AppDataContext appDataContext;
+        private ILogger? logger;
+
+        public ApiDataSourceService(AppDataContext appDataContext)
+        {
+            this.appDataContext = appDataContext;
+        }
+
         public Task<Result<object, Exception>> Create(EntityDefinition entityDefinition, object entityValue)
         {
             throw new NotImplementedException();
@@ -33,7 +41,11 @@ namespace Maya.FormsConstructionKit.Api.Library.Services.DataSource
                         };
 
                         return await requestTask;
-                    });
+                    })
+                    .MapAsync(values => Task.FromResult(
+                            values.Select(x => ObjectValueMapper.MapJsonObjToKeyVal(entityDefinition.Properties, x))
+                    ))
+                    .ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -48,7 +60,14 @@ namespace Maya.FormsConstructionKit.Api.Library.Services.DataSource
 
         public IDataSourceService WithLogger(ILogger logger)
         {
-            throw new NotImplementedException();
+            if (logger is null)
+            {
+                throw new ArgumentNullException(nameof(logger));
+            }
+
+            this.logger = logger;
+
+            return this;
         }
 
         private static Maya.AnyHttpClient.Model.UriRequest CreateUriRequest(string path, List<PropertyValue> values = null)

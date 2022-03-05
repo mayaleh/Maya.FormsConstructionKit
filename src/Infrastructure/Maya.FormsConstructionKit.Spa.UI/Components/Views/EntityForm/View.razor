@@ -114,18 +114,18 @@
                                   Nullable="true"
                                   NullText="-- choose here --"
                                   NullDataText="Loading..." />
-                                  @if (ViewModel.EntityForm.DataSource.AuthKind = DataSourceAuthKind.Basic)
+                            @if (ViewModel.EntityForm.DataSource.AuthKind == DataSourceAuthKind.Basic)
                             {
                                 <p>The base64 token will be generated from the username and password on calling an any HTTP request.</p>
                             }
                         </div>
-                        @if (ViewModel.EntityForm.DataSource.AuthKind = DataSourceAuthKind.Bearer)
+                        @if (ViewModel.EntityForm.DataSource.AuthKind == DataSourceAuthKind.Bearer)
                         {
                             <div class="col-md-6 col-12">
                                 <HxInputText Label="Authorization token" @bind-Value="@ViewModel.EntityForm.DataSource.AuthToken" Placeholder="Token" Hint="Please note, that the token is saved in text form in the app storage. Therefore, secure this storage thoroughly! This token will be added for all requests to the API." />
                             </div>
                         }
-                        @if (ViewModel.EntityForm.DataSource.AuthKind = DataSourceAuthKind.Basic)
+                        @if (ViewModel.EntityForm.DataSource.AuthKind == DataSourceAuthKind.Basic)
                         {
                             <div class="col-md-6 col-12">
                                 <HxInputText Label="Username" @bind-Value="@ViewModel.EntityForm.DataSource.UserName" Placeholder="UserName" Hint="Please note, that the username is saved in text form in the app storage. Therefore, secure this storage thoroughly! This token will be added for all requests to the API." />

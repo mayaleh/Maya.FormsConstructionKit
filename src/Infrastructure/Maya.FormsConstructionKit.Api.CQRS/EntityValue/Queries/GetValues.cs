@@ -31,7 +31,8 @@ namespace Maya.FormsConstructionKit.Api.CQRS.EntityValue.Queries
                     .BindAsync(async entityDefinition => {
                         IDataSourceService dataSource = entityDefinition.DataSourceDefinition.Type switch
                         {
-                            DataSourceType.Api => throw new NotImplementedException(),
+                            DataSourceType.Api => new ApiDataSourceService(this.dataContext)
+                                .WithLogger(this.logger),
                             DataSourceType.Storage => new StorageDataSourceService(this.dataContext)
                                 .WithLogger(this.logger),
                             _ => throw new NotImplementedException(),

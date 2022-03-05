@@ -76,6 +76,28 @@ namespace Maya.FormsConstructionKit.Api.Library.Mappers.Storage
             }
         }
 
+        public static object MapJsonObjToKeyVal(IEnumerable<PropertyDefinition> properties, object obj)
+        {
+            var type = obj.GetType();
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
+
+            if (obj is System.Text.Json.JsonElement) // Fails beacouse is type of Newtonsoft... Will be fixed after migration the Maya.AnyHttpClient
+            {
+                var jsonEl = (System.Text.Json.JsonElement)obj;
+                var keyVals = new Dictionary<string, object?>();
+                var jsonProps = jsonEl.EnumerateObject();
+                foreach (var item in jsonProps)
+                {
+                    var definition = properties.First(p => item.Name.Equals(p.Name, StringComparison.OrdinalIgnoreCase));
+                    var propVal = GetJsonPropVal(item, definition.Name, definition.ContentType);
+                    keyVals.Add(definition.Name, propVal);
+                }
+                return keyVals;
+            }
+            throw new ArgumentOutOfRangeException(type.Name);
+        }
+
         private static PropertyValue GetJsonPropVal(System.Text.Json.JsonProperty obj, string name, ContentType type)
         {
             var val = new PropertyValue
@@ -195,7 +217,6 @@ namespace Maya.FormsConstructionKit.Api.Library.Mappers.Storage
             throw new NotImplementedException($"Property '{name}' content type: {type}");
         }
 
-
         public static object MapValueModelToObject(List<PropertyValue> propertyValues)
         {
             var d = new Dictionary<string, object>();
@@ -217,28 +238,6 @@ namespace Maya.FormsConstructionKit.Api.Library.Mappers.Storage
             }
 
             return d;
-        }
-
-        public static Result<List<dynamic>, Exception> MapObjectDictionaryToDynamicList(IEnumerable<object> data)
-        {
-            try
-            {
-                var records = data.Select(x =>
-                {
-                    var propVal = x as Dictionary<string, object>;
-                    dynamic row = new ExpandoObject();
-                    foreach (var (name, val) in propVal)
-                    {
-                        row[name] = val;
-                    }
-                    return row;
-                }).ToList();
-                return Result<List<dynamic>, Exception>.Succeeded(records);
-            }
-            catch (Exception e)
-            {
-                return Result<List<dynamic>, Exception>.Failed(e);
-            }
         }
 
         public static Result<List<Dictionary<string, object>>, Exception> MapObjectDictionaryToCsvCols(IEnumerable<object> data, List<CsvColumn> csvColumns)
