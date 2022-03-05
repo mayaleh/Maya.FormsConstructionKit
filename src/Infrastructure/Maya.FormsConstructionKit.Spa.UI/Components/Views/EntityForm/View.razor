@@ -32,15 +32,15 @@
                     </div>
                     <div class="col-6">
                         <HxSelect Label="Key component"
-                              TItem="ComponentAll"
-                              TValue="string"
-                              Data="@(ViewModel.EntityForm.Components)"
-                              @bind-Value="ViewModel.EntityForm.KeyPropertyName"
-                              TextSelector="@(p => p.Name)"
-                              ValueSelector="@(p => p.Name)"
-                              NullText="-- choose here --"
-                              NullDataText="Loading..."
-                              Hint="Choose component key. This key is used to identify the row value."/>
+                                  TItem="ComponentAll"
+                                  TValue="string"
+                                  Data="@(ViewModel.EntityForm.Components)"
+                                  @bind-Value="ViewModel.EntityForm.KeyPropertyName"
+                                  TextSelector="@(p => p.Name)"
+                                  ValueSelector="@(p => p.Name)"
+                                  NullText="-- choose here --"
+                                  NullDataText="Loading..."
+                                  Hint="Choose component key. This key is used to identify the row value." />
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -67,40 +67,196 @@
                 <div class="row mt-3">
                     <div class="col-12">
                         <h3>Datasource settings</h3>
-                        <h3>webhooks</h3>
+                        @*<h3>webhooks</h3>*@
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6 align-self-center">
-                        <HxSelect Label="DataSource type" 
-                            TItem="DataSourceType"
-                            TValue="DataSourceType"
-                            Data="@(Enum.GetValues<DataSourceType>())"
-                            @bind-Value="@ViewModel.EntityForm.DataSource.Type"
-                            TextSelector="@(p => p.ToString())"
-                            ValueSelector="@(p => p)"
-                            Nullable="true"
-                            NullText="-- choose here --"
-                            NullDataText="Loading types..." />
+                        <HxSelect Label="DataSource type"
+                                  TItem="DataSourceType"
+                                  TValue="DataSourceType"
+                                  Data="@(Enum.GetValues<DataSourceType>())"
+                                  @bind-Value="@ViewModel.EntityForm.DataSource.Type"
+                                  TextSelector="@(p => p.ToString())"
+                                  ValueSelector="@(p => p)"
+                                  Nullable="true"
+                                  NullText="-- choose here --"
+                                  NullDataText="Loading types..." />
                     </div>
                 </div>
 
-                @if(ViewModel.EntityForm.DataSource.Type == DataSourceType.Storage)
+                @if (ViewModel.EntityForm.DataSource.Type == DataSourceType.Storage)
                 {
                     <div class="row">
-                    <div class="col-md-6 align-self-center">
-                        <p>No settings are required. Your data for this from will be stored on the server database.</p>
+                        <div class="col-md-6 align-self-center">
+                            <p>No settings are required. Your data for this from will be stored on the server database.</p>
+                        </div>
                     </div>
-                </div>
                 }
 
-                @if(ViewModel.EntityForm.DataSource.Type == DataSourceType.Api)
+                @if (ViewModel.EntityForm.DataSource.Type == DataSourceType.Api)
                 {
-                    // TODO
+                    <div class="row mt-3 mb-3">
+                        <div class="col-md-6 col-12">
+                            <HxInputText Label="API Endpoint" @bind-Value="@ViewModel.EntityForm.DataSource.Endpoint" Placeholder="API endpoint" Hint="This is the base uri for the api, example https://localhost:7071/api/v1/" />
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <HxInputText Label="Description" @bind-Value="@ViewModel.EntityForm.DataSource.Description" Placeholder="Any description" Hint="Any description or note. This is not used for any purpose." />
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <HxSelect Label="Authentication"
+                                  TItem="DataSourceAuthKind"
+                                  TValue="DataSourceAuthKind"
+                                  Data="@(Enum.GetValues<DataSourceAuthKind>())"
+                                  @bind-Value="@ViewModel.EntityForm.DataSource.AuthKind"
+                                  TextSelector="@(p => p.ToString())"
+                                  ValueSelector="@(p => p)"
+                                  Nullable="true"
+                                  NullText="-- choose here --"
+                                  NullDataText="Loading..." />
+                                  @if (ViewModel.EntityForm.DataSource.AuthKind = DataSourceAuthKind.Basic)
+                            {
+                                <p>The base64 token will be generated from the username and password on calling an any HTTP request.</p>
+                            }
+                        </div>
+                        @if (ViewModel.EntityForm.DataSource.AuthKind = DataSourceAuthKind.Bearer)
+                        {
+                            <div class="col-md-6 col-12">
+                                <HxInputText Label="Authorization token" @bind-Value="@ViewModel.EntityForm.DataSource.AuthToken" Placeholder="Token" Hint="Please note, that the token is saved in text form in the app storage. Therefore, secure this storage thoroughly! This token will be added for all requests to the API." />
+                            </div>
+                        }
+                        @if (ViewModel.EntityForm.DataSource.AuthKind = DataSourceAuthKind.Basic)
+                        {
+                            <div class="col-md-6 col-12">
+                                <HxInputText Label="Username" @bind-Value="@ViewModel.EntityForm.DataSource.UserName" Placeholder="UserName" Hint="Please note, that the username is saved in text form in the app storage. Therefore, secure this storage thoroughly! This token will be added for all requests to the API." />
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <HxInputText Label="Password" @bind-Value="@ViewModel.EntityForm.DataSource.Password" Placeholder="Password" Hint="Please note, that the password is saved in text form in the app storage. Therefore, secure this storage thoroughly! This token will be added for all requests to the API." />
+                            </div>
+                        }
+                    </div>
+                    <div class="row mt-3 mb-3">
+                        <div class="col-12">
+                            <p>For all paths is allowed to use variables. The name of the variable is the property unique name. For example, to set the delete path for an entity, that has a property called 'foo', use like this: entity/delete/{{foo}}</p>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 mb-3">
+                        <div class="col">
+                            <HxCard>
+                                <HeaderTemplate>Read the data</HeaderTemplate>
+                                <BodyTemplate>
+                                    <HxCardTitle>Settings for reading the entity data</HxCardTitle>
+                                    <div class="row">
+                                        <div class="col">
+                                            <HxInputText Label="Path" @bind-Value="@ViewModel.EntityForm.DataSource.ReadPath" Placeholder="Read path" Hint="This is the path for the API read method, example entity/read" />
+                                        </div>
+                                        <div class="col">
+                                            <HxSelect Label="HTTP method"
+                                                  TItem="DataSourceHttpMethodKind"
+                                                  TValue="DataSourceHttpMethodKind"
+                                                  Data="@(Enum.GetValues<DataSourceHttpMethodKind>())"
+                                                  @bind-Value="@ViewModel.EntityForm.DataSource.ReadHttpMethod"
+                                                  TextSelector="@(p => p.ToString())"
+                                                  ValueSelector="@(p => p)"
+                                                  Nullable="true"
+                                                  NullText="-- choose here --"
+                                                  NullDataText="Loading methods..." />
+                                        </div>
+                                    </div>
+                                </BodyTemplate>
+                            </HxCard>
+
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 mb-3">
+                        <div class="col">
+                            <HxCard>
+                                <HeaderTemplate>Create a record</HeaderTemplate>
+                                <BodyTemplate>
+                                    <HxCardTitle>Settings for creating a record for tihs entity</HxCardTitle>
+                                    <div class="row">
+                                        <div class="col">
+                                            <HxInputText Label="Path" @bind-Value="@ViewModel.EntityForm.DataSource.CreatePath" Placeholder="Create path" Hint="This is the path for the API create method, example entity/create" />
+                                        </div>
+                                        <div class="col">
+                                            <HxSelect Label="HTTP method"
+                                                  TItem="DataSourceHttpMethodKind"
+                                                  TValue="DataSourceHttpMethodKind"
+                                                  Data="@(Enum.GetValues<DataSourceHttpMethodKind>())"
+                                                  @bind-Value="@ViewModel.EntityForm.DataSource.CreateHttpMethod"
+                                                  TextSelector="@(p => p.ToString())"
+                                                  ValueSelector="@(p => p)"
+                                                  Nullable="true"
+                                                  NullText="-- choose here --"
+                                                  NullDataText="Loading methods..." />
+                                        </div>
+                                    </div>
+                                </BodyTemplate>
+                            </HxCard>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 mb-3">
+                        <div class="col">
+                            <HxCard>
+                                <HeaderTemplate>Update a record</HeaderTemplate>
+                                <BodyTemplate>
+                                    <HxCardTitle>Settings for update an existing record for this entity</HxCardTitle>
+                                    <div class="row">
+                                        <div class="col-md-6 col-12">
+                                            <HxInputText Label="Path" @bind-Value="@ViewModel.EntityForm.DataSource.UpdatePath" Placeholder="Update path" Hint="This is the path for the API update method, example entity/update" />
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <HxSelect Label="HTTP method"
+                                                  TItem="DataSourceHttpMethodKind"
+                                                  TValue="DataSourceHttpMethodKind"
+                                                  Data="@(Enum.GetValues<DataSourceHttpMethodKind>())"
+                                                  @bind-Value="@ViewModel.EntityForm.DataSource.UpdateHttpMethod"
+                                                  TextSelector="@(p => p.ToString())"
+                                                  ValueSelector="@(p => p)"
+                                                  Nullable="true"
+                                                  NullText="-- choose here --"
+                                                  NullDataText="Loading methods..." />
+                                        </div>
+                                    </div>
+                                </BodyTemplate>
+                            </HxCard>
+
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 mb-3">
+                        <div class="col">
+                            <HxCard>
+                                <HeaderTemplate>Delete a record</HeaderTemplate>
+                                <BodyTemplate>
+                                    <HxCardTitle>Settings for delete an existing record for this entity</HxCardTitle>
+                                    <div class="row">
+                                        <div class="col">
+                                            <HxInputText Label="Path" @bind-Value="@ViewModel.EntityForm.DataSource.DeletePath" Placeholder="Delete path" Hint="This is the path for the API update method, example entity/delete?id={{my-id}}" />
+                                        </div>
+                                        <div class="col">
+                                            <HxSelect Label="HTTP method"
+                                                  TItem="DataSourceHttpMethodKind"
+                                                  TValue="DataSourceHttpMethodKind"
+                                                  Data="@(Enum.GetValues<DataSourceHttpMethodKind>())"
+                                                  @bind-Value="@ViewModel.EntityForm.DataSource.DeleteHttpMethod"
+                                                  TextSelector="@(p => p.ToString())"
+                                                  ValueSelector="@(p => p)"
+                                                  Nullable="true"
+                                                  NullText="-- choose here --"
+                                                  NullDataText="Loading methods..." />
+                                        </div>
+                                    </div>
+                                </BodyTemplate>
+                            </HxCard>
+                        </div>
+
+                    </div>
                 }
             </Content>
         </HxTab>
     </HxTabPanel>
-
-    
 </EditForm>

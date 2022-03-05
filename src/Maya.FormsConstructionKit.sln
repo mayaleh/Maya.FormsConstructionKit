@@ -41,6 +41,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maya.FormsConstructionKit.A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maya.FormsConstructionKit.Spa.Library", "Infrastructure\Maya.FormsConstructionKit.Spa.Library\Maya.FormsConstructionKit.Spa.Library.csproj", "{6B9E0D0B-2077-454E-9600-81ECFE4E6496}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4632C345-0119-44B9-89C9-53CDD51BF496}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maya.FormsConstructionKit.Api.Library.Tests", "..\tests\Infrastructure\Maya.FormsConstructionKit.Api.Library.Tests\Maya.FormsConstructionKit.Api.Library.Tests.csproj", "{515D0E49-1779-4D7F-90D3-C3D14FC145D7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{E8946A18-A8CB-4774-A3AB-2E9C6CE9C3AE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Spa", "Spa", "{A1F9D5E3-7648-42DC-ACB5-624BE9FBCC31}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +91,10 @@ Global
 		{6B9E0D0B-2077-454E-9600-81ECFE4E6496}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B9E0D0B-2077-454E-9600-81ECFE4E6496}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B9E0D0B-2077-454E-9600-81ECFE4E6496}.Release|Any CPU.Build.0 = Release|Any CPU
+		{515D0E49-1779-4D7F-90D3-C3D14FC145D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{515D0E49-1779-4D7F-90D3-C3D14FC145D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{515D0E49-1779-4D7F-90D3-C3D14FC145D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{515D0E49-1779-4D7F-90D3-C3D14FC145D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,6 +110,9 @@ Global
 		{512E8762-B03F-473B-93BE-DC0D8E6F10B9} = {D9CDDEF3-A200-4DA4-9BEA-B8CE85B1162B}
 		{A21F23A4-055F-4AE9-926E-6BE5B7C386A7} = {D9CDDEF3-A200-4DA4-9BEA-B8CE85B1162B}
 		{6B9E0D0B-2077-454E-9600-81ECFE4E6496} = {92F79616-D634-49EA-912B-9EA08975BAEA}
+		{515D0E49-1779-4D7F-90D3-C3D14FC145D7} = {E8946A18-A8CB-4774-A3AB-2E9C6CE9C3AE}
+		{E8946A18-A8CB-4774-A3AB-2E9C6CE9C3AE} = {4632C345-0119-44B9-89C9-53CDD51BF496}
+		{A1F9D5E3-7648-42DC-ACB5-624BE9FBCC31} = {4632C345-0119-44B9-89C9-53CDD51BF496}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {250D9CAD-9869-4213-B530-4DD12C34750A}

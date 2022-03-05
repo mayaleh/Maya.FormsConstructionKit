@@ -14,6 +14,10 @@ namespace Maya.FormsConstructionKit.Api.Library.Mappers.Storage
                 DeletePath = dataSourceDefinition.DeletePath,
                 Description = dataSourceDefinition.Description,
                 Endpoint = dataSourceDefinition.Endpoint,
+                AuthToken = dataSourceDefinition.AuthToken,
+                UserName = dataSourceDefinition.UserName,
+                Password = dataSourceDefinition.Password,
+                AuthKind = dataSourceDefinition.AuthKind.Map(),
                 QueryParams = dataSourceDefinition.QueryParams,
                 ReadHttpMethod = dataSourceDefinition.ReadHttpMethod.Map(),
                 ReadPath = dataSourceDefinition.ReadPath,
@@ -23,6 +27,16 @@ namespace Maya.FormsConstructionKit.Api.Library.Mappers.Storage
             };
         }
 
+        private static Maya.FormsConstructionKit.Shared.Model.DataSourceAuthKind Map(this Api.Model.Storage.DataSourceAuthKind authKind)
+        {
+            return authKind switch
+            {
+                Api.Model.Storage.DataSourceAuthKind.Basic => Maya.FormsConstructionKit.Shared.Model.DataSourceAuthKind.Basic,
+                Api.Model.Storage.DataSourceAuthKind.Bearer => Maya.FormsConstructionKit.Shared.Model.DataSourceAuthKind.Bearer,
+                Api.Model.Storage.DataSourceAuthKind.None => Maya.FormsConstructionKit.Shared.Model.DataSourceAuthKind.None,
+                _ => throw new NotImplementedException()
+            };
+        }
         private static Maya.FormsConstructionKit.Shared.Model.DataSourceType Map(this Api.Model.Storage.DataSourceType httpMethodKind)
         {
             return httpMethodKind switch

@@ -70,6 +70,7 @@ The app is connected to OAuth and OIDC provider to authenticate and then to abil
 - [ ] File input
 - [ ] Date input
 - [ ] DateTime input
+- [ ] For API DataSource, support reading or sending the json data in nested objects. In most cases like reading, the data is not available in the root of the json response.
 
 ## Blazor client
 - [x] after authorize the user, use the auth token to send authorized requests to the backend API

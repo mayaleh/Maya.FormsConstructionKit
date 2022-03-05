@@ -14,12 +14,27 @@ namespace Maya.FormsConstructionKit.Api.Library.Mappers.Shared.Model
                 DeletePath = dataSource.DeletePath,
                 Description = dataSource.Description,
                 Endpoint = dataSource.Endpoint,
+                AuthToken = dataSource.AuthToken,
+                UserName = dataSource.UserName,
+                Password = dataSource.Password,
+                AuthKind = dataSource.AuthKind.Map(),
                 QueryParams = dataSource.QueryParams,
                 ReadHttpMethod = dataSource.ReadHttpMethod.Map(),
                 ReadPath = dataSource.ReadPath,
                 Type = dataSource.Type.Map(),
                 UpdateHttpMethod = dataSource.UpdateHttpMethod.Map(),
                 UpdatePath = dataSource.UpdatePath,
+            };
+        }
+
+        private static Api.Model.Storage.DataSourceAuthKind Map(this Maya.FormsConstructionKit.Shared.Model.DataSourceAuthKind authKind)
+        {
+            return authKind switch
+            {
+                Maya.FormsConstructionKit.Shared.Model.DataSourceAuthKind.Basic => Api.Model.Storage.DataSourceAuthKind.Basic,
+                Maya.FormsConstructionKit.Shared.Model.DataSourceAuthKind.Bearer => Api.Model.Storage.DataSourceAuthKind.Bearer,
+                Maya.FormsConstructionKit.Shared.Model.DataSourceAuthKind.None => Api.Model.Storage.DataSourceAuthKind.None,
+                _ => throw new NotImplementedException()
             };
         }
 

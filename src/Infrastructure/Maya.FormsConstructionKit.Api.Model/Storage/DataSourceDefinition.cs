@@ -11,6 +11,14 @@ namespace Maya.FormsConstructionKit.Api.Model.Storage
 
         public string Description { get; set; } = string.Empty;
 
+        public string AuthToken { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+
+        public int TimeoutSeconds { get; set; }
+
+        public DataSourceAuthKind AuthKind { get; set; }
+
         public DataSourceType Type { get; set; }
 
         public string Endpoint { get; set; } = string.Empty;
