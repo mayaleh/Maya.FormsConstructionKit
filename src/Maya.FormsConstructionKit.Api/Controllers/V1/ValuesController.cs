@@ -10,7 +10,7 @@ namespace Maya.FormsConstructionKit.Api.Controllers.V1
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class ValuesController : ControllerBase
     {
         private readonly ILogger<ValuesController> logger;

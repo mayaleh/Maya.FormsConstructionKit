@@ -82,16 +82,20 @@ namespace Maya.FormsConstructionKit.Api.Library.Mappers.Storage
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
-            if (obj is System.Text.Json.JsonElement) // Fails beacouse is type of Newtonsoft... Will be fixed after migration the Maya.AnyHttpClient
+            if (obj is System.Text.Json.JsonElement)
             {
                 var jsonEl = (System.Text.Json.JsonElement)obj;
                 var keyVals = new Dictionary<string, object?>();
                 var jsonProps = jsonEl.EnumerateObject();
                 foreach (var item in jsonProps)
                 {
-                    var definition = properties.First(p => item.Name.Equals(p.Name, StringComparison.OrdinalIgnoreCase));
-                    var propVal = GetJsonPropVal(item, definition.Name, definition.ContentType);
-                    keyVals.Add(definition.Name, propVal);
+                    var definition = properties.FirstOrDefault(p => item.Name.Equals(p.Name, StringComparison.OrdinalIgnoreCase));
+                    if (definition is null)
+                    {
+                        continue;
+                    }
+                    var valueBoxed = GetPropObjValue(item, definition.Name, definition.ContentType);
+                    keyVals.Add(definition.Name, valueBoxed);
                 }
                 return keyVals;
             }
@@ -153,6 +157,52 @@ namespace Maya.FormsConstructionKit.Api.Library.Mappers.Storage
             {
                 val.TextVal = obj.Value.GetString();
                 return val;
+            }
+
+            throw new NotImplementedException($"Property '{name}' content type: {type}");
+        }
+
+        private static object GetPropObjValue(System.Text.Json.JsonProperty obj, string name, ContentType type)
+        {
+            if (type == ContentType.Bool)
+            {
+                return obj.Value.GetBoolean();
+            }
+
+            if (type == ContentType.DateTime)
+            {
+                return obj.Value.GetDateTime();
+            }
+
+            if (type == ContentType.DateOnly)
+            {
+                return DateOnly.FromDateTime(obj.Value.GetDateTime());
+            }
+
+            if (type == ContentType.Decimal)
+            {
+                return obj.Value.GetDecimal();
+            }
+
+            if (type == ContentType.Float)
+            {
+                var dd = obj.Value.GetDouble();
+                return Convert.ToSingle(dd);
+            }
+
+            if (type == ContentType.Int)
+            {
+                return obj.Value.GetInt32();
+            }
+
+            if (type == ContentType.Long)
+            {
+                return obj.Value.GetInt64();
+            }
+
+            if (type == ContentType.Text)
+            {
+                return obj.Value.GetString();
             }
 
             throw new NotImplementedException($"Property '{name}' content type: {type}");
