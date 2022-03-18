@@ -43,7 +43,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maya.FormsConstructionKit.S
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4632C345-0119-44B9-89C9-53CDD51BF496}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maya.FormsConstructionKit.Api.Library.Tests", "..\tests\Infrastructure\Maya.FormsConstructionKit.Api.Library.Tests\Maya.FormsConstructionKit.Api.Library.Tests.csproj", "{515D0E49-1779-4D7F-90D3-C3D14FC145D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maya.FormsConstructionKit.Api.Library.Tests", "..\tests\Infrastructure\Maya.FormsConstructionKit.Api.Library.Tests\Maya.FormsConstructionKit.Api.Library.Tests.csproj", "{515D0E49-1779-4D7F-90D3-C3D14FC145D7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{E8946A18-A8CB-4774-A3AB-2E9C6CE9C3AE}"
 EndProject

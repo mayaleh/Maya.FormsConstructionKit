@@ -4,12 +4,21 @@ using Maya.FormsConstructionKit.Api.Model.Storage;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using Maya.FormsConstructionKit.Api.Library;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Logging.ClearProviders();
+Serilog.ILogger logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+        .CreateLogger();
+
+builder.Logging.AddSerilog(logger);
+
 var services = builder.Services;
 
 // Add services to the container.
-
+services.AddSingleton(logger);
 // Set configuration
 services.Configure<AppSettings>(builder.Configuration);
 var appSettings = builder.Configuration.Get<AppSettings>();

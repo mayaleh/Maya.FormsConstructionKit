@@ -102,6 +102,55 @@ namespace Maya.FormsConstructionKit.Api.Library.Mappers.Storage
             throw new ArgumentOutOfRangeException(type.Name);
         }
 
+        public static object MapValueModelToObject(List<PropertyValue> propertyValues)
+        {
+            var d = new Dictionary<string, object>();
+
+            foreach (var propertyValue in propertyValues)
+            {
+                d.Add(propertyValue.Name, propertyValue.Type switch
+                {
+                    ContentType.Bool => propertyValue.BoolVal.GetValueOrDefault(),
+                    ContentType.DateOnly => propertyValue.DateVal.GetValueOrDefault(),
+                    ContentType.DateTime => propertyValue.DateTimeVal.GetValueOrDefault(),
+                    ContentType.Decimal => propertyValue.DecimalVal.GetValueOrDefault(),
+                    ContentType.Float => propertyValue.FloatVal.GetValueOrDefault(),
+                    ContentType.Int => propertyValue.IntVal.GetValueOrDefault(),
+                    ContentType.Long => propertyValue.LongVal.GetValueOrDefault(),
+                    ContentType.Text => propertyValue.TextVal ?? string.Empty,
+                    _ => throw new NotImplementedException($"Property '{propertyValue.Name}' content type: {propertyValue.Type}")
+                });
+            }
+
+            return d;
+        }
+
+        public static Result<List<Dictionary<string, object>>, Exception> MapObjectDictionaryToCsvCols(IEnumerable<object> data, List<CsvColumn> csvColumns)
+        {
+            try
+            {
+                var records = data.Select(x =>
+                {
+                    var propVal = x as Dictionary<string, object>;
+                    var row = new Dictionary<string, object>();
+                    foreach (var (name, val) in propVal)
+                    {
+                        var mapCol = csvColumns.FirstOrDefault(z => z.PropertyName == name);
+                        if (mapCol != null)
+                        {
+                            row.Add(mapCol.Column, val);
+                        }
+                    }
+                    return row;
+                }).ToList();
+                return Result<List<Dictionary<string, object>>, Exception>.Succeeded(records);
+            }
+            catch (Exception e)
+            {
+                return Result<List<Dictionary<string, object>>, Exception>.Failed(e);
+            }
+        }
+
         private static PropertyValue GetJsonPropVal(System.Text.Json.JsonProperty obj, string name, ContentType type)
         {
             var val = new PropertyValue
@@ -265,55 +314,6 @@ namespace Maya.FormsConstructionKit.Api.Library.Mappers.Storage
             }
 
             throw new NotImplementedException($"Property '{name}' content type: {type}");
-        }
-
-        public static object MapValueModelToObject(List<PropertyValue> propertyValues)
-        {
-            var d = new Dictionary<string, object>();
-
-            foreach (var propertyValue in propertyValues)
-            {
-                d.Add(propertyValue.Name, propertyValue.Type switch
-                {
-                    ContentType.Bool => propertyValue.BoolVal.GetValueOrDefault(),
-                    ContentType.DateOnly => propertyValue.DateVal.GetValueOrDefault(),
-                    ContentType.DateTime => propertyValue.DateTimeVal.GetValueOrDefault(),
-                    ContentType.Decimal => propertyValue.DecimalVal.GetValueOrDefault(),
-                    ContentType.Float => propertyValue.FloatVal.GetValueOrDefault(),
-                    ContentType.Int => propertyValue.IntVal.GetValueOrDefault(),
-                    ContentType.Long => propertyValue.LongVal.GetValueOrDefault(),
-                    ContentType.Text => propertyValue.TextVal ?? string.Empty,
-                    _ => throw new NotImplementedException($"Property '{propertyValue.Name}' content type: {propertyValue.Type}")
-                });
-            }
-
-            return d;
-        }
-
-        public static Result<List<Dictionary<string, object>>, Exception> MapObjectDictionaryToCsvCols(IEnumerable<object> data, List<CsvColumn> csvColumns)
-        {
-            try
-            {
-                var records = data.Select(x =>
-                {
-                    var propVal = x as Dictionary<string, object>;
-                    var row = new Dictionary<string, object>();
-                    foreach (var (name, val) in propVal)
-                    {
-                        var mapCol = csvColumns.FirstOrDefault(z => z.PropertyName == name);
-                        if (mapCol != null)
-                        {
-                            row.Add(mapCol.Column, val);
-                        }
-                    }
-                    return row;
-                }).ToList();
-                return Result<List<Dictionary<string, object>>, Exception>.Succeeded(records);
-            }
-            catch (Exception e)
-            {
-                return Result<List<Dictionary<string, object>>, Exception>.Failed(e);
-            }
         }
     }
 }
