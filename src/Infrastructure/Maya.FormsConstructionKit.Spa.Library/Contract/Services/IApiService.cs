@@ -11,9 +11,9 @@ namespace Maya.FormsConstructionKit.Spa.Library.Contract.Services
     {
         IEntityFormService EntityForm { get; }
 
-        IValuesService ValuesService { get; }
+        IValuesService Values { get; }
 
-        ICsvDefinitionService CsvDefinitionService { get; }
+        ICsvDefinitionService CsvDefinition { get; }
 
         Task<Result<Shared.Model.AppInfo, Exception>> GetApiInfoAsync();
     }

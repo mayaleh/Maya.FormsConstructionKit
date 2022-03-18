@@ -10,6 +10,8 @@
         
         ICommand<string> EditCommand { get; }
 
+        ICommand<string> ExportsCommand { get; }
+
         ICommand CreateCommand { get; }
     }
 }

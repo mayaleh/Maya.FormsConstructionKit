@@ -1,6 +1,5 @@
 ﻿ <h3>Entity Froms</h3>
 
-
 <div class="row mb-3">
     <div class="col">
         <HxButton Text="Add"
@@ -20,6 +19,7 @@
 	<ContextMenu Context="item">
         <HxContextMenu>
             <HxContextMenuItem Text="Edit" Icon="BootstrapIcon.Pen" Enabled="this.ViewModel!.EditCommand.CanExecute" OnClick="() => this.ViewModel!.EditCommand.Execute(item.Name)" />
+            <HxContextMenuItem Text="Exports" Icon="BootstrapIcon.ArrowsAngleExpand" Enabled="this.ViewModel!.ExportsCommand.CanExecute" OnClick="() => this.ViewModel!.ExportsCommand.Execute(item.Name)" />
             <HxContextMenuItem Text="Delete" Icon="BootstrapIcon.Trash" Enabled="this.ViewModel!.DeleteCommand.CanExecute" OnClick="async () => await this.ViewModel!.DeleteCommand.Execute(item.Name)" />
         </HxContextMenu>
     </ContextMenu>

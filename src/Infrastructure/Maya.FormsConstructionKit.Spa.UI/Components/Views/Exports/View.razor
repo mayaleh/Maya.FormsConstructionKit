@@ -1,0 +1,25 @@
+﻿<div class="row mb-3">
+    <div class="col">
+        <HxButton Text="Add"
+            Icon="BootstrapIcon.Plus"
+            Size="ButtonSize.Regular"
+            Color="ThemeColor.Primary"
+            Enabled="this.ViewModel!.CreateCommand.CanExecute"
+            OnClick="this.ViewModel!.CreateCommand.Execute" />
+    </div>
+</div>
+
+<HxGrid TItem="Maya.FormsConstructionKit.Shared.Model.CsvDefinition" TableContainerCssClass="table-responsive" DataProvider="ProcessingDataProvider" PageSize="10">
+	<Columns>
+		<HxGridColumn TItem="Maya.FormsConstructionKit.Shared.Model.CsvDefinition" HeaderText="Name" ItemTextSelector="@(item => item.Name)" SortKeySelector="@(item => item.Name)" IsDefaultSortColumn="true" />
+		<HxGridColumn TItem="Maya.FormsConstructionKit.Shared.Model.CsvDefinition" HeaderText="Delimiter" ItemTextSelector="@(item => item.Delimiter)" SortKeySelector="@(item => item.Delimiter)" />
+		<HxGridColumn TItem="Maya.FormsConstructionKit.Shared.Model.CsvDefinition" HeaderText="Date version" ItemTextSelector="@(item => item.VersionDate.ToShortDateString())" SortKeySelector="@(item => item.VersionDate)" />
+	</Columns>
+
+	<ContextMenu Context="item">
+        <HxContextMenu>
+            <HxContextMenuItem Text="Edit" Icon="BootstrapIcon.Pen" Enabled="this.ViewModel!.EditCommand.CanExecute" OnClick="() => this.ViewModel!.EditCommand.Execute(item.Name)" />
+            <HxContextMenuItem Text="Delete" Icon="BootstrapIcon.Trash" Enabled="this.ViewModel!.DeleteCommand.CanExecute" OnClick="async () => await this.ViewModel!.DeleteCommand.Execute(item.Name)" />
+        </HxContextMenu>
+    </ContextMenu>
+</HxGrid>

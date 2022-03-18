@@ -14,8 +14,8 @@ namespace Maya.FormsConstructionKit.Spa.Library.Services
     public class ApiService : IApiService
     {
         public IEntityFormService EntityForm { get; private set; }
-        public IValuesService ValuesService { get; private set; }
-        public ICsvDefinitionService CsvDefinitionService { get; }
+        public IValuesService Values { get; private set; }
+        public ICsvDefinitionService CsvDefinition { get; }
 
         private readonly HttpClient httpClient;
 
@@ -23,16 +23,16 @@ namespace Maya.FormsConstructionKit.Spa.Library.Services
         {
             this.httpClient = httpClient;
             EntityForm = new EntityFormService(httpClient);
-            ValuesService = new ValuesService(httpClient);
-            CsvDefinitionService = new CsvDefinitionService(this.httpClient);
+            Values = new ValuesService(httpClient);
+            CsvDefinition = new CsvDefinitionService(this.httpClient);
         }
 
         public ApiService(IHttpClientFactory clientFactory)
         {
             this.httpClient = clientFactory.CreateClient(nameof(Maya.FormsConstructionKit.Spa.Library.Contract.Services.IApiService));
             EntityForm = new EntityFormService(this.httpClient);
-            ValuesService = new ValuesService(this.httpClient);
-            CsvDefinitionService = new CsvDefinitionService(this.httpClient);
+            Values = new ValuesService(this.httpClient);
+            CsvDefinition = new CsvDefinitionService(this.httpClient);
         }
 
         public async Task<Result<Shared.Model.AppInfo, Exception>> GetApiInfoAsync()

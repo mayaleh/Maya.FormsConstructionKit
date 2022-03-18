@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
+using Maya.Ext;
 using Maya.FormsConstructionKit.Shared.Model;
 using Maya.FormsConstructionKit.Spa.Library.Contract.Services.Api;
 
@@ -51,6 +52,11 @@ namespace Maya.FormsConstructionKit.Spa.Library.Services.Api
             {
                 return Result<CsvDefinition, Exception>.Failed(e);
             }
+        }
+
+        public Task<Result<Unit, Exception>> DeleteAsync(string id)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<Result<CsvDefinition[], Exception>> GetAllAsync()

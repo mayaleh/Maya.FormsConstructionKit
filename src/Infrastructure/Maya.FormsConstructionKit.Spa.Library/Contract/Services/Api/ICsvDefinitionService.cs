@@ -9,5 +9,7 @@ namespace Maya.FormsConstructionKit.Spa.Library.Contract.Services.Api
         Task<Result<CsvDefinition[], Exception>> GetAllAsync();
 
         Task<Result<CsvDefinition[], Exception>> GetAllForEntityAsync(string entityName);
+
+        Task<Result<Maya.Ext.Unit, Exception>> DeleteAsync(string id);
     }
 }

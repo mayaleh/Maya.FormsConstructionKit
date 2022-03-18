@@ -11,6 +11,10 @@ namespace Maya.FormsConstructionKit.Spa.UI
         public const string EntityForms = "/entity-forms";
 
         public const string EntityForm = "/entity-form";
+
+        public const string Exports = "/exports";
+
+        public const string Export = "/export";
         
         public const string EntityData = "/data";
     }
