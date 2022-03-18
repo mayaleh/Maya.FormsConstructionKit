@@ -44,9 +44,9 @@ namespace Maya.FormsConstructionKit.Spa.ViewModels.EntityData
             var keyValObj = this.vm.RowManaged.ToDictionary(keySelector: m => m.Name, elementSelector: x => x.Value);
 
             var result = this.vm.IsEditingItem ?
-                await this.vm.ApiService.ValuesService.UpdateAsync(this.vm.EntityName, keyValObj)
+                await this.vm.ApiService.Values.UpdateAsync(this.vm.EntityName, keyValObj)
                     .ConfigureAwait(false) :
-                await this.vm.ApiService.ValuesService.AddAsync(this.vm.EntityName, keyValObj)
+                await this.vm.ApiService.Values.AddAsync(this.vm.EntityName, keyValObj)
                     .ConfigureAwait(false);
 
             if (result.IsFailure)
@@ -85,7 +85,7 @@ namespace Maya.FormsConstructionKit.Spa.ViewModels.EntityData
 
         public async Task Load()
         {
-            var result = await this.vm.ApiService.ValuesService.GetAllAsync(this.vm.EntityName)
+            var result = await this.vm.ApiService.Values.GetAllAsync(this.vm.EntityName)
                 .ConfigureAwait(false);
 
             if (result.IsFailure)
@@ -96,7 +96,7 @@ namespace Maya.FormsConstructionKit.Spa.ViewModels.EntityData
 
             this.vm.EntityData = result.Success ?? Maya.FormsConstructionKit.Shared.Model.EntityData.Create();
 
-            var csvResult = await this.vm.ApiService.CsvDefinitionService.GetAllForEntityAsync(this.vm.EntityName)
+            var csvResult = await this.vm.ApiService.CsvDefinition.GetAllForEntityAsync(this.vm.EntityName)
                 .ConfigureAwait(false);
 
             if (csvResult.IsFailure)
@@ -110,7 +110,7 @@ namespace Maya.FormsConstructionKit.Spa.ViewModels.EntityData
 
         public async Task ExportCsv(string csvId)
         {
-            var result = await this.vm.ApiService.ValuesService.GetCsvAsync(this.vm.EntityName, csvId)
+            var result = await this.vm.ApiService.Values.GetCsvAsync(this.vm.EntityName, csvId)
                 .ConfigureAwait(false);
 
             if (result.IsFailure)

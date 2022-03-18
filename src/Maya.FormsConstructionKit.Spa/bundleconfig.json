@@ -1,0 +1,18 @@
+[
+  {
+    "outputFileName": "wwwroot/css/app.css",
+    "inputFiles": [
+      "Assets/dist/css/app.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/app.min.css",
+    "inputFiles": [
+      "Assets/dist/css/app.css"
+    ],
+    "minify": {
+      "enabled": false,
+      "renameLocals": false
+    }
+  }
+]

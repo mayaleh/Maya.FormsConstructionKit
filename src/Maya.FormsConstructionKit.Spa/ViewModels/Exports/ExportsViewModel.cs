@@ -1,21 +1,20 @@
-﻿using Maya.FormsConstructionKit.Shared.Model;
-using Maya.FormsConstructionKit.Spa.Library.Contract.Services;
+﻿using Maya.FormsConstructionKit.Spa.Library.Contract.Services;
 using Maya.FormsConstructionKit.Spa.Library.Contract.UI;
-using Maya.FormsConstructionKit.Spa.Library.Contract.UI.ViewModels.EntityForms;
+using Maya.FormsConstructionKit.Spa.Library.Contract.UI.ViewModels.Exports;
 using Maya.FormsConstructionKit.Spa.Model.UI;
 using Maya.FormsConstructionKit.Spa.Model.UI.View;
 using Microsoft.AspNetCore.Components;
 
-namespace Maya.FormsConstructionKit.Spa.ViewModels.EntityForms
+namespace Maya.FormsConstructionKit.Spa.ViewModels.Exports
 {
-    public class EntityFormsViewModel : BaseViewModel, IEntityFormsViewModel, IDisposable
+    public class ExportsViewModel : BaseViewModel, IExportsViewModel
     {
         private readonly IApiService apiService;
 
         private readonly INotifyMessage notifyMessage;
         private readonly NavigationManager navigationManager;
 
-        public List<Maya.FormsConstructionKit.Shared.Model.EntityForm> EntityForms { get; private set; } = new();
+        public List<Maya.FormsConstructionKit.Shared.Model.CsvDefinition> CsvDefinitions { get; private set; } = new();
 
         public ICommandAsync LoadCommand { get; set; }
 
@@ -23,15 +22,17 @@ namespace Maya.FormsConstructionKit.Spa.ViewModels.EntityForms
 
         public ICommand<string> EditCommand { get; set; }
 
-        public ICommand<string> ExportsCommand { get; set; }
-
         public ICommand CreateCommand { get; set; }
 
-        public EntityFormsViewModel(Action onUiChanged,
+        private readonly string entityName;
+
+        public ExportsViewModel(string entityName,
+            Action onUiChanged,
             IApiService apiService,
             INotifyMessage notifyMessage,
             NavigationManager navigationManager) : base(onUiChanged)
         {
+            this.entityName = entityName;
             OnIsInit = (v) => { OnUiChanged.Invoke(); };
             OnIsBusy = (v) => { OnUiChanged.Invoke(); };
             this.apiService = apiService;
@@ -40,57 +41,51 @@ namespace Maya.FormsConstructionKit.Spa.ViewModels.EntityForms
             LoadCommand = new CommandAsync(this.Load);
             DeleteCommand = new CommandAsync<string>(this.Delete);
             EditCommand = new Command<string>(this.Edit);
-            ExportsCommand = new Command<string>(this.Exports);
             CreateCommand = new Command(this.Create);
 
             LoadCommand!.OnExecuteChanged += this.LoadCommand_OnExecuteChanged;
             DeleteCommand!.OnExecuteChanged += this.DeleteCommand_OnExecuteChanged;
             EditCommand!.OnExecuteChanged += this.EditCommand_OnExecuteChanged;
-            ExportsCommand!.OnExecuteChanged += this.ExportsCommand_OnExecuteChanged;
             CreateCommand!.OnExecuteChanged += this.CreateCommand_OnExecuteChanged;
+        }
+
+        public async Task Init()
+        {
+            IsInit = true;
+            await this.Load()
+                .ConfigureAwait(false);
+
+            IsInit = false;
         }
 
         private void LoadCommand_OnExecuteChanged(object? sender, bool e) => IsBusy = e;
         private void DeleteCommand_OnExecuteChanged(object? sender, bool e) => IsBusy = e;
         private void EditCommand_OnExecuteChanged(object? sender, bool e) => IsBusy = e;
-        private void ExportsCommand_OnExecuteChanged(object? sender, bool e) => IsBusy = e;
         private void CreateCommand_OnExecuteChanged(object? sender, bool e) => IsBusy = e;
 
         private void Edit(string name)
         {
-            var url = Library.Helper.RouteHelper.ComposePath(UI.PagesName.EntityForm, name);
+            var url = Library.Helper.RouteHelper.ComposePath(UI.PagesName.Export, name);
 
             this.navigationManager.NavigateTo(url);
         }
 
         private void Create()
         {
-            var url = Library.Helper.RouteHelper.ComposePath(UI.PagesName.EntityForm);
-
-            this.navigationManager.NavigateTo(url);
-        }
-        private void Exports(string entityName)
-        {
-            if (string.IsNullOrEmpty(entityName))
-            {
-                this.notifyMessage?.Error("Empty form name.");
-                return;
-            }
-
-            var url = Library.Helper.RouteHelper.ComposePath(UI.PagesName.Exports, entityName);
+            var url = Library.Helper.RouteHelper.ComposePath(UI.PagesName.Export);
 
             this.navigationManager.NavigateTo(url);
         }
 
-        private async Task Delete(string name)
+        private async Task Delete(string id)
         {
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(id))
             {
-                this.notifyMessage?.Error("Empty form name.");
+                this.notifyMessage?.Error("Empty ID.");
                 return;
             }
 
-            var result = await this.apiService.EntityForm.DeleteAsync(name)
+            var result = await this.apiService.CsvDefinition.DeleteAsync(id)
                 .ConfigureAwait(false);
 
             if (result.IsSuccess == false)
@@ -99,7 +94,7 @@ namespace Maya.FormsConstructionKit.Spa.ViewModels.EntityForms
                 return;
             }
 
-            this.notifyMessage?.Success($"Successfully deleted form: '{name}'");
+            this.notifyMessage?.Success($"Successfully deleted.");
 
             await this.Load()
                 .ConfigureAwait(false);
@@ -107,7 +102,7 @@ namespace Maya.FormsConstructionKit.Spa.ViewModels.EntityForms
 
         private async Task Load()
         {
-            var result = await this.apiService.EntityForm.GetAllAsync()
+            var result = await this.apiService.CsvDefinition.GetAllForEntityAsync(this.entityName)
                 .ConfigureAwait(false);
 
             if (result.IsFailure)
@@ -116,7 +111,7 @@ namespace Maya.FormsConstructionKit.Spa.ViewModels.EntityForms
                 this.notifyMessage?.Error(result.Failure.Message);
             }
 
-            EntityForms = result.Success?.ToList() ?? new();
+            CsvDefinitions = result.Success?.ToList() ?? new();
         }
 
         public void Dispose()
@@ -132,10 +127,6 @@ namespace Maya.FormsConstructionKit.Spa.ViewModels.EntityForms
             if (EditCommand != null)
             {
                 EditCommand.OnExecuteChanged -= this.EditCommand_OnExecuteChanged;
-            }
-            if (ExportsCommand != null)
-            {
-                ExportsCommand.OnExecuteChanged -= this.ExportsCommand_OnExecuteChanged;
             }
             if (CreateCommand != null)
             {
