@@ -20,7 +20,7 @@
 	<ItemGroup>
 		<PackageReference Include="Havit.Blazor.Components.Web.Bootstrap" Version="2.2.6" />
 		<PackageReference Include="BlazorComponentUtilities" Version="1.8.0" />
-		<PackageReference Include="BuildWebCompiler" Version="1.12.405" />
+		<PackageReference Include="BuildWebCompiler2022" Version="1.14.7" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.3" />
 	</ItemGroup>
 

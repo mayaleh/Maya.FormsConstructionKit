@@ -1,5 +1,26 @@
-﻿$primary: #00c853;
-$secondary: #d500f9;
+﻿/*$primary: #00c853;*/
+/*$secondary: #d500f9;*/
+/*$primary: #337FA3;*/
+$primary: #0068b5;
+/* #e3f6f9 */
+/* #b9e7f0 */
+
+/*$secondary: #C2C2C2;*/
+$secondary: #3f3f3f;
+/* #f1f1f1 */
+
+$warning: #fec91b;
+
+$body-bg: #f3f3f3;
+$body-color: #262626;
+
+/*#A6A6A9*/
+/*
+$body-bg: #F2F1F6;*/
+/*$body-color: #111;*/
+/*@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap');*/
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap');*/
 
 @import '../lib/bootstrap/scss/bootstrap.scss';
 
@@ -17,9 +38,74 @@ $secondary: #d500f9;
     s-dark: #9e00c5;
     s-dark-text: #FFF;
 */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+#maya-app {
+    $h-color: #38404c;
+    /*$primary-color: rgb(109, 33, 122);
+    $primary-color-hover: rgb(167, 30, 191);*/
+
+    .hx-messenger-error {
+        color: var(--bs-danger);
+    }
+
+    .table-responsive {
+        overflow-x: unset;
+    }
+
+    .table {
+        td, th {
+            border: 1px solid #e5e5e5;
+        }
+    }
+
+    .table > :not(caption) > * > * {
+        padding: 2px 4px;
+    }
+    /*.btn-primary {
+        background-color: $primary-color;
+        border-color: $primary-color;
+
+        &:hover {
+            background-color: $primary-color-hover;
+            border-color: $primary-color-hover;
+        }
+    }*/
+
+    .btn-secondary {
+    }
+
+    .btn {
+        /*border: 1px solid transparent;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;*/
+        border-radius: 0;
+    }
+
+    h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
+        color: $h-color;
+    }
+}
+
+body {
+    /*font-family: 'Poppins', sans-serif;*/
+    font-family: 'Open Sans', sans-serif;
+    background-color: $body-bg !important;
+    color: $body-color !important;
+    -webkit-font-smoothing: antialiased;
+}
+
+.section {
+    background-color: white;
+    padding: 1.5rem;
+}
 
 .nav-link:hover, .nav-link:focus {
-    color: #212529;
+    color: $secondary;
 }
 
 .nav-link:hover .active-icon, .nav-link:focus .active-icon {
@@ -31,7 +117,8 @@ $secondary: #d500f9;
 }
 
 .nav-link.active {
-    color: #212529;
+    color: $secondary;
+    font-size: 1.1em;
 }
 
 .nav-link.active .active-icon {
@@ -39,17 +126,18 @@ $secondary: #d500f9;
 }
 
 .maya-navbar {
-    background-color: rgb(51 105 30);
-    background-color: rgb(98 151 73);
-    background-color: rgb(171 71 188);
-    background-color: rgb(223 120 239);
-    background-color: rgb(73 104 151);
-    color: #FFF;
+    background: #fff;
+    border-bottom: 1px solid #d7d7d7;
 }
 
-.maya-navbar, .maya-navbar a {
-    color: #FFF;
-    font-weight: 500;
+.maya-navbar {
+    a {
+        color: $primary;
+    }
+
+    @media (min-width: 1280px) {
+        font-size: 1.2em;
+    }
 }
 
 .maya-footer {
@@ -88,5 +176,47 @@ $secondary: #d500f9;
 
 
 .hx-messenger .hx-toast-container {
-    z-index: 9999
+    z-index: 9999;
 }
+
+
+#maya-app {
+    font-family: 'Roboto', sans-serif;
+    color: #424242;
+
+    .navbar-brand {
+        color: #00acee !important;
+        .logo{
+            height: 47px;
+        }
+    }
+
+    .btn-login {
+        background-color: #f3f3f3;
+        box-shadow: none !important;
+        border: none !important;
+
+        &:hover {
+            box-shadow: none !important;
+            background-color: $primary;
+            color: white;
+        }
+    }
+
+    .navbar {
+        transform: translateY(0);
+        transition: transform 300ms 300ms cubic-bezier(0.4, 0, 0.2, 1), opacity 0ms 300ms, background-color 150ms 0ms cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 2px 4px RGB(0 0 0 / 50%);
+    }
+
+    .btn {
+        transition: opacity 85ms linear 115ms;
+        /*box-shadow: 0 1px 1px 0 RGB(66 66 66 / 8%), 0 1px 3px 1px RGB(66 66 66 / 16%);*/
+        border: none !important;
+
+        &:hover, &:focus {
+            box-shadow: 0 1px 3px 1px RGB(66 66 66 / 20%), 0 2px 8px 4px RGB(66 66 66 / 10%);
+        }
+    }
+}
+

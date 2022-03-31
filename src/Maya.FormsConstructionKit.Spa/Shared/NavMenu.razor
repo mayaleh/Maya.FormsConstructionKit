@@ -4,7 +4,7 @@
 <header class="navbar navbar-expand-md bd-navbar maya-navbar">
     <nav class="container-fluid flex-wrap flex-md-nowrap" aria-label="Main navigation">
         <a class="navbar-brand p-0 me-2 text-muted" href="/">
-            <HxIcon Icon="@BootstrapIcon.Table" />
+            <img src="images/logoFormsSm.png" alt="formsKit logo" class="logo" />
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,11 +18,11 @@
                 <Authorized>
                     <ul class="navbar-nav flex-row flex-wrap bd-navbar-nav pt-2 py-md-0">
                         <li class="nav-item col-6 col-md-auto">
-                            <HxNavLink Href="" Match="NavLinkMatch.All"><HxIcon Icon="@BootstrapIcon.ArrowRight" CssClass="active-icon" /><HxIcon Icon="@BootstrapIcon.House" /> Home<HxIcon Icon="@BootstrapIcon.ArrowLeft" CssClass="active-icon" /></HxNavLink>
+                            <HxNavLink Href="" Match="NavLinkMatch.All"><HxIcon Icon="@BootstrapIcon.House" /> Home</HxNavLink>
                         </li>
                         <Virtualize Items="@this.entities" TItem="string" Context="entityName">
                             <li class="nav-item col-6 col-md-auto">
-                                <HxNavLink Href="@("/data/" + entityName)"><HxIcon Icon="@BootstrapIcon.ArrowRight" CssClass="active-icon" />@entityName<HxIcon Icon="@BootstrapIcon.ArrowLeft" CssClass="active-icon" /></HxNavLink>
+                                <HxNavLink Href="@("/data/" + entityName)">@entityName</HxNavLink>
                             </li>
                         </Virtualize>
                     </ul>
@@ -31,7 +31,7 @@
 
                     <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
                         <li class="nav-item col-6 col-md-auto">
-                            <HxNavLink Href="/entity-forms"><HxIcon Icon="@BootstrapIcon.ArrowRight" CssClass="active-icon" /><HxIcon Icon="@BootstrapIcon.Gear" /> Forms<HxIcon Icon="@BootstrapIcon.ArrowLeft" CssClass="active-icon" /></HxNavLink>
+                            <HxNavLink Href="/entity-forms"><HxIcon Icon="@BootstrapIcon.Gear" /> Forms</HxNavLink>
                         </li>
                     </ul>
 

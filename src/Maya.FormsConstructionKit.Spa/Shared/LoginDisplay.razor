@@ -17,10 +17,10 @@
             }
             <span>@context.User.Identity?.Name</span>
         </NavLink>
-        <button class="btn btn-inline-primary my-2 my-md-0 ms-md-3" @onclick="BeginSignOut">Log out</button>
+        <button class="btn btn-inline-primary btn-login my-2 my-md-0 ms-md-3" @onclick="BeginSignOut">Log out</button>
     </Authorized>
     <NotAuthorized>
-        <a class="btn btn-inline-primary d-lg-inline-block my-2 my-md-0 ms-md-3" href="authentication/login"><i class="fa-solid fa-right-to-bracket"></i> Log in</a>
+        <a class="btn btn-inline-primary btn-login d-lg-inline-block my-2 my-md-0 ms-md-3" href="authentication/login"><i class="fa-solid fa-right-to-bracket"></i> Log in</a>
     </NotAuthorized>
 </AuthorizeView>
 

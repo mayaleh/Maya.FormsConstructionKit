@@ -104,6 +104,11 @@
         "js/bootstrap.min.js",
         "js/bootstrap.min.js.map"
       ]
+    },
+    {
+      "destination": "wwwroot/images/",
+      "provider": "filesystem",
+      "library": "Assets/images/"
     }
   ]
 }

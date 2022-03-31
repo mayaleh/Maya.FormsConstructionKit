@@ -2,51 +2,54 @@
 @using Maya.FormsConstructionKit.Spa.Library.Helper
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 
-<h3>@ViewModel.EntityData.EntityForm.Name data</h3>
+<div class="section">
+    <h3>@ViewModel.EntityData.EntityForm.Name data</h3>
 
-<div class="row mb-3">
-    <div class="col-auto">
-        <HxButton Text="Add"
-                  Icon="BootstrapIcon.Plus"
-                  Size="ButtonSize.Regular"
-                  Color="ThemeColor.Primary"
-                  Enabled="this.ViewModel!.Commands.ShowCreateFormCommand.CanExecute"
-                  OnClick="this.HandleAddRow" />
-    </div>
-    @if (ViewModel.CsvDefinitions != null && ViewModel.CsvDefinitions.Length > 0)
-    {
+    <div class="row mb-3">
         <div class="col-auto">
-            <HxDropdown>
-                <HxDropdownToggleButton Color="ThemeColor.Primary">Exports</HxDropdownToggleButton>
-                <HxDropdownMenu>
-                    <Virtualize Items="ViewModel.CsvDefinitions" TItem="Shared.Model.CsvDefinition" Context="csvDefinition">
-                        <HxDropdownItem OnClick="@(async () => await ViewModel!.Commands.ExportToCsv.Execute(csvDefinition.Id))">@csvDefinition.Name</HxDropdownItem>
-                    </Virtualize>
-                </HxDropdownMenu>
-            </HxDropdown>
+            <HxButton Text="Add"
+                      Icon="BootstrapIcon.Plus"
+                      Size="ButtonSize.Regular"
+                      Color="ThemeColor.Primary"
+                      Enabled="this.ViewModel!.Commands.ShowCreateFormCommand.CanExecute"
+                      OnClick="this.HandleAddRow" />
         </div>
-    }
+        @if (ViewModel.CsvDefinitions != null && ViewModel.CsvDefinitions.Length > 0)
+        {
+            <div class="col-auto">
+                <HxDropdown>
+                    <HxDropdownToggleButton Color="ThemeColor.Primary">Exports</HxDropdownToggleButton>
+                    <HxDropdownMenu>
+                        <Virtualize Items="ViewModel.CsvDefinitions" TItem="Shared.Model.CsvDefinition" Context="csvDefinition">
+                            <HxDropdownItem OnClick="@(async () => await ViewModel!.Commands.ExportToCsv.Execute(csvDefinition.Id))">@csvDefinition.Name</HxDropdownItem>
+                        </Virtualize>
+                    </HxDropdownMenu>
+                </HxDropdown>
+            </div>
+        }
+    </div>
+
+    <HxGrid @ref="this.dataGird" TItem="object" DataProvider="ProcessingDataProvider" PageSize="25">
+        <Columns>
+            <Virtualize Items="ViewModel.EntityData.EntityForm.Components" TItem="Shared.Model.ComponentAll" Context="col">
+                <HxGridColumn TItem="object" HeaderText="@(col.Label)" SortKeySelector="@(item => col.Name)">
+                    <ItemTemplate Context="item">
+                        @col.GetValueStr(item)
+                    </ItemTemplate>
+                </HxGridColumn>
+            </Virtualize>
+        </Columns>
+
+        <ContextMenu Context="item">
+            <HxContextMenu>
+                <HxContextMenuItem Text="Edit" Icon="BootstrapIcon.Pen" Enabled="ViewModel!.Commands.EditCommand.CanExecute" OnClick="@(() => HandleEditRow(item))" />
+                <HxContextMenuItem Text="Delete" Icon="BootstrapIcon.Trash" Enabled="ViewModel!.Commands.DeleteCommand.CanExecute" OnClick="async () => await this.ViewModel!.Commands.DeleteCommand.Execute(item)" />
+            </HxContextMenu>
+        </ContextMenu>
+    </HxGrid>
+
+
 </div>
-
-<HxGrid @ref="this.dataGird" TItem="object" DataProvider="ProcessingDataProvider" PageSize="25">
-    <Columns>
-        <Virtualize Items="ViewModel.EntityData.EntityForm.Components" TItem="Shared.Model.ComponentAll" Context="col">
-            <HxGridColumn TItem="object" HeaderText="@(col.Label)" SortKeySelector="@(item => col.Name)">
-                <ItemTemplate Context="item">
-                    @col.GetValueStr(item)
-                </ItemTemplate>
-            </HxGridColumn>
-        </Virtualize>
-    </Columns>
-
-    <ContextMenu Context="item">
-        <HxContextMenu>
-            <HxContextMenuItem Text="Edit" Icon="BootstrapIcon.Pen" Enabled="ViewModel!.Commands.EditCommand.CanExecute" OnClick="@(() => HandleEditRow(item))" />
-            <HxContextMenuItem Text="Delete" Icon="BootstrapIcon.Trash" Enabled="ViewModel!.Commands.DeleteCommand.CanExecute" OnClick="async () => await this.ViewModel!.Commands.DeleteCommand.Execute(item)" />
-        </HxContextMenu>
-    </ContextMenu>
-</HxGrid>
-
 
 <HxModal @ref="rowValueFormModal" Title="Value" Centered="true" ShowCloseButton="false" Size="ModalSize.Large">
     <BodyTemplate>
