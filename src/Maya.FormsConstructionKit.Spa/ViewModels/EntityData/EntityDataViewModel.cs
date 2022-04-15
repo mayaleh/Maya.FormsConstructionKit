@@ -21,7 +21,7 @@ namespace Maya.FormsConstructionKit.Spa.ViewModels.EntityData
 
         public Maya.FormsConstructionKit.Shared.Model.EntityData EntityData { get; set; } = Maya.FormsConstructionKit.Shared.Model.EntityData.Create();
 
-        public string EntityName { get; }
+        public string EntityName { get; private set; }
 
         public bool IsEditingItem { get; set; } = false;
 
@@ -31,6 +31,8 @@ namespace Maya.FormsConstructionKit.Spa.ViewModels.EntityData
 
         public CsvDefinition[] CsvDefinitions { get; set; }
 
+        public Func<Task> EntityNameChanged { get; set; }
+        
         public EntityDataViewModel(string entityName,
             Action onUiChanged,
             IApiService apiService,
@@ -48,6 +50,15 @@ namespace Maya.FormsConstructionKit.Spa.ViewModels.EntityData
 
             Actions = new Actions(this);
             Commands = new Commands(this);
+        }
+
+        public async Task OnEntityEventChanged(string entityName)
+        {
+            EntityName = entityName;
+            if (EntityNameChanged != null)
+            {
+                await EntityNameChanged.Invoke();
+            }
         }
 
         public void Dispose()

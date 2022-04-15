@@ -28,5 +28,9 @@ namespace Maya.FormsConstructionKit.Spa.Library.Contract.UI.ViewModels.EntityDat
         IActions Actions { get; }
 
         bool IsEditingItem { get; set; }
+
+        Func<Task> EntityNameChanged { get; set; }
+
+        Task OnEntityEventChanged(string entityName);
     }
 }

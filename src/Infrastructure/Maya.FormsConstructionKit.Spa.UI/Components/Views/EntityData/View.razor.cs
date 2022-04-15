@@ -17,6 +17,20 @@ namespace Maya.FormsConstructionKit.Spa.UI.Components.Views.EntityData
         private HxModal rowValueFormModal = null!;
         private HxGrid<object> dataGird = null!;
 
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+        }
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            if (firstRender)
+            {
+                ViewModel.EntityNameChanged = this.dataGird.RefreshDataAsync;
+            }
+            base.OnAfterRender(firstRender);
+        }
+
         private async Task<GridDataProviderResult<object>> ProcessingDataProvider(GridDataProviderRequest<object> request)
         {
             await ViewModel!.Commands.LoadCommand.Execute();

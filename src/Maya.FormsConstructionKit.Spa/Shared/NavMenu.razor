@@ -22,7 +22,7 @@
                         </li>
                         <Virtualize Items="@this.entities" TItem="string" Context="entityName">
                             <li class="nav-item col-6 col-md-auto">
-                                <HxNavLink Href="@("/data/" + entityName)">@entityName</HxNavLink>
+                                <HxNavLink Href="@("/data/" + entityName)" >@entityName</HxNavLink>
                             </li>
                         </Virtualize>
                     </ul>

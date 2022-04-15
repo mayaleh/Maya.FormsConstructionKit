@@ -8,7 +8,7 @@ using Microsoft.JSInterop;
 namespace Maya.FormsConstructionKit.Spa.Pages
 {
     [Authorize]
-    public partial class EntityData
+    public partial class EntityData : IDisposable
     {
         [Inject]
         public NavigationManager NavigationManager { get; set; } = null!;
@@ -26,15 +26,46 @@ namespace Maya.FormsConstructionKit.Spa.Pages
 
         public NotifyMessage NotifyMessage { get; set; } = new NotifyMessage();
 
-        protected override void OnInitialized()
+        //protected override async Task OnParametersSetAsync()
+        //{
+            
+        //}
+
+        protected override async Task OnParametersSetAsync()
         {
-            Console.WriteLine(EntityName);
-            this.vm = new ViewModels.EntityData.EntityDataViewModel(EntityName,
+            if (this.vm == null)
+            {
+                this.vm = new ViewModels.EntityData.EntityDataViewModel(EntityName,
                 () => this.StateHasChanged(),
                 ApiService!,
                 NotifyMessage,
                 NavigationManager,
                 JSRuntime);
+                await base.OnParametersSetAsync();
+            }
+
+            await this.vm.OnEntityEventChanged(EntityName);
+
+            await base.OnParametersSetAsync();
         }
+
+        public void Dispose()
+        {
+            if (this.vm != null)
+            {
+                this.vm.Dispose();
+            }
+        }
+
+        //protected override void OnInitialized()
+        //{
+        //    Console.WriteLine(EntityName);
+        //    this.vm = new ViewModels.EntityData.EntityDataViewModel(EntityName,
+        //        () => this.StateHasChanged(),
+        //        ApiService!,
+        //        NotifyMessage,
+        //        NavigationManager,
+        //        JSRuntime);
+        //}
     }
 }

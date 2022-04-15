@@ -1,4 +1,5 @@
-﻿using Maya.FormsConstructionKit.Shared.Model.Extention;
+﻿using Havit.Blazor.Components.Web.Bootstrap;
+using Maya.FormsConstructionKit.Shared.Model.Extention;
 using Maya.FormsConstructionKit.Spa.Library.Contract.UI.ViewModels.EntityData;
 using Maya.FormsConstructionKit.Spa.Library.Extensions;
 using Microsoft.JSInterop;
@@ -130,6 +131,12 @@ namespace Maya.FormsConstructionKit.Spa.ViewModels.EntityData
                 file.ContentType,
                 file.Name
             );
+        }
+
+        public async Task LoadGrid(GridDataProviderRequest<object> request)
+        {
+            await this.Load();
+            request.ApplyTo(this.vm.EntityData.Data);
         }
     }
 }
